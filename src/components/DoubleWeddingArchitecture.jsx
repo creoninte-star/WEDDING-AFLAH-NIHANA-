@@ -3,7 +3,6 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import PhotoSlideshow from './PhotoSlideshow';
 
 const couplePhotos = [
-  "/aflah and nihana/WhatsApp Image 2026-04-21 at 6.13.42 PM (1).jpeg",
   "/aflah and nihana/WhatsApp Image 2026-04-21 at 6.13.42 PM.jpeg",
   "/aflah and nihana/WhatsApp Image 2026-04-21 at 6.13.43 PM (1).jpeg",
   "/aflah and nihana/WhatsApp Image 2026-04-21 at 6.13.43 PM.jpeg"
