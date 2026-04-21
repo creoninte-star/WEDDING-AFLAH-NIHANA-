@@ -50,7 +50,7 @@ const ClosingMessage = () => {
         <div className="mt-4">
           <p className="font-sans text-[8px] uppercase tracking-[0.2em] text-gold mb-2 font-bold">Siblings</p>
           <p className="font-sans text-[9px] sm:text-[10px] uppercase tracking-[0.2em] text-textDark/60 font-medium leading-relaxed">
-            Ajmal, Amaan & Rooha Fathima<br/> 
+            Ajmal, Afna, Amaan, & Rooha Fathima<br/> 
             & Families
           </p>
         </div>

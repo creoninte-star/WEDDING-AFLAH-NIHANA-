@@ -144,8 +144,13 @@ const FooterRSVP = () => {
                     />
                     <h3 className="font-serif text-2xl text-gold mb-2 drop-shadow-sm">You’re In! 🎉</h3>
                     <div className="w-8 h-px bg-gold/30 mx-auto mb-4"></div>
-                    <p className="font-sans text-[11px] text-sage leading-relaxed px-2 font-medium">
-                      Thank you for confirming. You are now officially entered to win our <span className="text-gold font-bold">Lucky Draw Prize</span>. The winner will be announced live on <span className="text-textDark font-bold underline decoration-gold/30">May 10th at 10:00 PM</span> during the event. Good luck!
+                    <div className="font-sans text-[11px] text-sage leading-relaxed px-2 font-medium space-y-1 mb-4">
+                      <p>First Prize Winner : Gift 🎁</p>
+                      <p>Second winner : Cash Prize</p>
+                      <p>Third winner : Cash Prize</p>
+                    </div>
+                    <p className="font-sans text-[10px] text-textDark/70 italic px-2">
+                      The winners will be announced live on <span className="text-textDark font-bold underline decoration-gold/30">May 10th at 10:00 PM</span> during the event. Good luck!
                     </p>
                     <div className="mt-6 font-serif text-[10px] text-gold/60 tracking-[0.3em] uppercase">Lucky Ticket #786</div>
                  </div>
