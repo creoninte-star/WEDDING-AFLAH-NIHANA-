@@ -38,58 +38,49 @@ const AbstractFloral = ({ className }) => (
   </svg>
 );
 
-const FlyingPigeon = () => (
+const SealGuidePigeon = () => (
   <motion.div 
     className="absolute z-[60] pointer-events-none"
     style={{ left: '50%', top: '50%' }}
-    animate={{ 
-      x: [80, 110, 80], // Higher and further right for better visibility
-      y: [-60, -90, -60], 
-      rotate: [-10, 10, -10]
-    }}
-    transition={{ 
-      duration: 5, 
-      repeat: Infinity, 
-      ease: "easeInOut" 
-    }}
+    initial={{ x: 60, y: -45, opacity: 0 }}
+    animate={{ opacity: 1 }}
   >
     <div className="relative -translate-x-1/2 -translate-y-1/2 flex flex-col items-center">
-      {/* Enhanced & Larger Pigeon Silhouette */}
-      <div className="relative w-28 h-24">
+      {/* Smaller, Simple Pigeon Silhouette */}
+      <div className="relative w-14 h-12">
         <motion.svg 
           viewBox="0 0 100 100" 
-          className="w-full h-full text-white/95 drop-shadow-[4px_8px_16px_rgba(0,0,0,0.15)]"
+          className="w-full h-full text-white/90 drop-shadow-md"
         >
-          {/* Main Wing (Dynamic Flap) */}
+          {/* Wings - Only Flapping Animation */}
           <motion.path 
-            d="M45,55 C35,35 15,15 5,30 C-5,45 10,65 45,65" 
+            d="M50,55 C40,40 25,25 15,35 C5,45 15,65 50,65"
             fill="currentColor"
             animate={{ 
               d: [
-                "M45,55 C35,25 15,10 5,30 C-5,45 10,65 45,65", 
-                "M45,55 C40,75 25,90 10,75 C-5,60 10,35 45,55"
+                "M50,55 C40,40 25,25 15,35 C5,45 15,65 50,65", 
+                "M50,55 C40,65 25,75 15,65 C5,55 15,35 50,55"
               ]
             }}
-            transition={{ repeat: Infinity, duration: 0.7, ease: "easeInOut" }}
+            transition={{ repeat: Infinity, duration: 0.6, ease: "easeInOut" }}
           />
-          {/* Body, Tail & Head */}
-          <path d="M40,65 C55,50 80,50 90,60 C100,70 95,90 75,85 C60,82 45,75 40,65" fill="currentColor" />
-          <path d="M42,68 L25,82 L35,88 L45,75 Z" fill="currentColor" /> {/* Tail */}
-          <circle cx="90" cy="58" r="7" fill="currentColor" /> {/* Head */}
-          <path d="M96,58 L104,61 L96,64 Z" fill="#D8C2A0" /> {/* Beak */}
-          <circle cx="92" cy="56" r="1.5" fill="#6F3346" /> {/* Eye */}
+          {/* Body */}
+          <path d="M45,60 C55,48 75,48 85,58 C95,68 85,85 65,80 C55,75 45,70 45,60" fill="currentColor" />
+          {/* Head & Beak */}
+          <circle cx="85" cy="52" r="5" fill="currentColor" />
+          <path d="M90,52 L96,55 L90,58 Z" fill="#D8C2A0" />
         </motion.svg>
       </div>
 
-      {/* Pointing Label - Larger and more prominent */}
+      {/* Tap Here Label */}
       <motion.div 
-        className="mt-1 bg-white/95 px-4 py-2 rounded-full border-2 border-primary-pink/30 shadow-2xl"
-        initial={{ opacity: 0, scale: 0.8 }}
-        animate={{ opacity: 1, scale: 1 }}
+        className="mt-1 bg-white/90 px-3 py-1 rounded-full border border-primary-pink/30 shadow-md"
+        animate={{ y: [0, -3, 0] }}
+        transition={{ repeat: Infinity, duration: 2 }}
       >
         <div className="flex flex-col items-center">
-          <p className="font-sans text-[11px] font-bold uppercase tracking-[0.25em] text-primary-pink whitespace-nowrap">Click Here</p>
-          <div className="w-0.5 h-3 bg-primary-pink/40 mt-1"></div>
+          <p className="font-sans text-[8px] font-bold uppercase tracking-[0.2em] text-primary-pink whitespace-nowrap">Tap Here</p>
+          <div className="w-px h-1.5 bg-primary-pink/40 mt-0.5"></div>
         </div>
       </motion.div>
     </div>
@@ -140,9 +131,9 @@ const HeroEnvelope = ({ onOpen }) => {
       {/* Floating Envelope Container */}
       <div className="relative w-full max-w-[340px] aspect-[4/3] flex items-center justify-center z-10 transition-all duration-300">
         
-        {/* Animated Flying Pigeon */}
+        {/* Animated Pigeon Guide */}
         <AnimatePresence>
-          {!isOpen && <FlyingPigeon />}
+          {!isOpen && <SealGuidePigeon />}
         </AnimatePresence>
 
         <div className="relative w-full h-full bg-paper rounded-sm flex items-center justify-center cursor-pointer paper-bg shadow-[0_20px_50px_rgba(0,0,0,0.1),0_10px_20px_rgba(0,0,0,0.05)] transition-transform duration-500 hover:scale-[1.02]" onClick={handleOpen}>
