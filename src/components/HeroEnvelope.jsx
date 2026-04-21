@@ -82,69 +82,7 @@ const HeroEnvelope = ({ onOpen }) => {
       {/* Floating Envelope & Characters Container */}
       <div className="relative w-full max-w-[340px] aspect-[4/3] flex items-center justify-center z-10">
         
-        <AnimatePresence>
-          {!isOpen && (
-            <>
-              {/* Jerry */}
-              <motion.img 
-                src="/jerry.png"
-                alt="Jerry"
-                className="absolute -bottom-8 left-6 w-20 sm:w-28 z-50 pointer-events-none drop-shadow-xl"
-                initial={{ opacity: 0, scaleX: -0.8, scaleY: 0.8, rotate: -10 }}
-                animate={{ 
-                  opacity: 1, 
-                  scaleX: -1, 
-                  scaleY: 1,
-                  rotate: -15,
-                  y: [0, -15, 0]
-                }}
-                exit={{ opacity: 0, scale: 0.5, transition: { duration: 0.2 } }}
-                transition={{ 
-                  y: { repeat: Infinity, duration: 1.5, ease: "easeInOut", delay: 0.4 },
-                  opacity: { duration: 0.4 }
-                }}
-              />
 
-              {/* Tom */}
-              <motion.img 
-                src="/tom.png"
-                alt="Tom"
-                className="absolute top-[55%] -right-4 w-28 sm:w-40 z-50 pointer-events-none drop-shadow-xl"
-                initial={{ opacity: 0, scale: 0.8, rotate: 10 }}
-                animate={{ 
-                  opacity: 1, 
-                  scale: 1, 
-                  rotate: -25,
-                  y: [0, -15, 0]
-                }}
-                exit={{ opacity: 0, scale: 0.5, transition: { duration: 0.2 } }}
-                transition={{ 
-                  y: { repeat: Infinity, duration: 1.5, ease: "easeInOut", delay: 0.2 },
-                  opacity: { duration: 0.4 }
-                }}
-              />
-
-              {/* Mickey Mouse */}
-              <motion.img 
-                src="/mickey mouse.png"
-                alt="Mickey"
-                className="absolute -bottom-14 left-1/2 -ml-6 w-28 sm:w-40 z-50 pointer-events-none drop-shadow-xl"
-                initial={{ opacity: 0, scale: 0.8, rotate: 5 }}
-                animate={{ 
-                  opacity: 1, 
-                  scale: 1, 
-                  rotate: 0,
-                  y: [0, -20, 0]
-                }}
-                exit={{ opacity: 0, scale: 0.5, transition: { duration: 0.2 } }}
-                transition={{ 
-                   y: { repeat: Infinity, duration: 1.5, ease: "easeInOut", delay: 0 },
-                   opacity: { duration: 0.4 }
-                }}
-              />
-            </>
-          )}
-        </AnimatePresence>
 
         <div className="relative w-full h-full bg-paper rounded-sm flex items-center justify-center cursor-pointer paper-bg shadow-[0_20px_50px_rgba(0,0,0,0.1),0_10px_20px_rgba(0,0,0,0.05)] transition-transform duration-500 hover:scale-[1.02]" onClick={handleOpen}>
           
