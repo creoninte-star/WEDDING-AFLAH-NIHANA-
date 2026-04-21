@@ -353,16 +353,6 @@ const EventSections = ({ onAllRevealed }) => {
           
           <div className="space-y-6 mt-8 text-center overflow-hidden">
             <div className={`transition-all duration-1000 ${revealed ? 'opacity-100 scale-100' : 'opacity-20 scale-95 blur-sm'}`}>
-              <h3 className="font-sans text-[9px] uppercase tracking-widest text-[#899E8F] mb-1 font-bold">Nikkah Ceremony</h3>
-              <p className="font-serif text-xs text-gold font-bold italic tracking-wide mb-1">Dhuʻl-Qiʻdah 21</p>
-              <p className="font-serif text-lg text-textDark font-bold">Saturday, May 9</p>
-              <p className="font-sans text-[10px] text-gold font-bold uppercase tracking-[0.2em] mt-2 underline decoration-gold/30 underline-offset-4 mb-4">10:30 AM</p>
-              <CountdownDisplay targetDateIso="2026-05-09T10:30:00" revealed={revealed} />
-            </div>
-
-            <div className="w-16 h-px bg-gold/20 mx-auto my-4"></div>
-
-            <div className={`transition-all duration-1000 ${revealed ? 'opacity-100 scale-100' : 'opacity-20 scale-95 blur-sm'}`}>
               <h3 className="font-sans text-[9px] uppercase tracking-widest text-[#899E8F] mb-1 font-bold">Wedding Ceremony</h3>
               <p className="font-serif text-xs text-gold font-bold italic tracking-wide mb-1">Dhuʻl-Qiʻdah 22</p>
               <p className="font-serif text-lg text-textDark font-bold">Sunday, May 10</p>

@@ -120,7 +120,7 @@ const MasterInvitation = () => {
           transition={{ duration: 0.8, delay: 1 }}
           viewport={{ once: true }}
         >
-          With the blessings of Allah, we are humbly requesting the presence of you and your family to the Nikkah & Wedding Functions of:
+          With the blessings of Allah, we are humbly requesting the presence of you and your family to the Wedding Function of:
         </motion.p>
 
         {/* Side-by-Side Groom & Bride Panels */}
@@ -138,15 +138,14 @@ const MasterInvitation = () => {
             
             <h2 className="font-serif text-[1.4rem] sm:text-2xl text-textDark italic drop-shadow-sm leading-tight mb-4">Aflah</h2>
             
-            <p className="font-sans text-[9px] uppercase tracking-widest text-sage mb-1">Nikkah & Wedding</p>
+            <p className="font-sans text-[9px] uppercase tracking-widest text-gold font-bold mb-1">Wedding Ceremony</p>
             <div className="w-6 h-px bg-gold/50 my-1"></div>
             
+            
             <div className="space-y-1 mt-2">
-              <p className="font-serif text-[10px] font-bold text-textDark/90">May 9: Nikkah</p>
-              <p className="font-serif text-[9px] text-textDark/80 leading-tight">10:30 AM<br/>Alankar Auditorium</p>
-              <div className="w-4 h-px bg-sage/30 mx-auto my-1"></div>
-              <p className="font-serif text-[10px] font-bold text-textDark/90">May 10: Wedding</p>
-              <p className="font-serif text-[9px] text-textDark/80 leading-tight">5:00 PM - 10:00 PM<br/>Alankar Auditorium</p>
+              <p className="font-serif text-lg text-textDark font-bold">Sunday, May 10</p>
+              <p className="font-serif text-xs text-textDark/80 leading-tight">5:00 PM - 10:00 PM<br/>Alankar Auditorium</p>
+            </div>
             </div>
           </div>
 
@@ -154,15 +153,14 @@ const MasterInvitation = () => {
           <div className="flex-1 flex flex-col border-t border-b border-gold/40 py-4 text-center items-center justify-start">
             <h2 className="font-serif text-[1.4rem] sm:text-2xl text-textDark italic drop-shadow-sm leading-tight mb-4">Nihana</h2>
             
-            <p className="font-sans text-[9px] uppercase tracking-widest text-sage mb-1">Nikkah & Wedding</p>
+            <p className="font-sans text-[9px] uppercase tracking-widest text-gold font-bold mb-1">Wedding Ceremony</p>
             <div className="w-6 h-px bg-gold/50 my-1"></div>
             
+            
             <div className="space-y-1 mt-2">
-              <p className="font-serif text-[10px] font-bold text-textDark/90">May 9: Nikkah</p>
-              <p className="font-serif text-[9px] text-textDark/80 leading-tight">10:30 AM<br/>Alankar Auditorium</p>
-              <div className="w-4 h-px bg-sage/30 mx-auto my-1"></div>
-              <p className="font-serif text-[10px] font-bold text-textDark/90">May 10: Wedding</p>
-              <p className="font-serif text-[9px] text-textDark/80 leading-tight">5:00 PM - 10:00 PM<br/>Alankar Auditorium</p>
+              <p className="font-serif text-lg text-textDark font-bold">Sunday, May 10</p>
+              <p className="font-serif text-xs text-textDark/80 leading-tight">5:00 PM - 10:00 PM<br/>Alankar Auditorium</p>
+            </div>
             </div>
           </div>
         </motion.div>
