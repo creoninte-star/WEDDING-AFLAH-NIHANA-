@@ -92,7 +92,6 @@ const FooterRSVP = () => {
           <div className="text-center mb-10">
             <h2 className="font-serif text-3xl text-dark-accent italic leading-tight mb-2">Are You Coming?</h2>
             <div className="w-12 h-px bg-primary-pink/40 mx-auto mb-4"></div>
-            <p className="font-sans text-[9px] uppercase tracking-widest text-primary-pink font-bold">Please RSVP by May 5th</p>
           </div>
 
           {!response ? (
