@@ -144,7 +144,7 @@ const MasterInvitation = () => {
             
             <div className="space-y-1 mt-2">
               <p className="font-serif text-lg text-textDark font-bold">Sunday, May 10</p>
-              <p className="font-serif text-xs text-textDark/80 leading-tight">5:00 PM - 10:00 PM<br/>Alankar Auditorium</p>
+              <p className="font-serif text-xs text-textDark/80 leading-tight">5:00 PM - 10:00 PM<br/>Opposite Sakkina Textiles</p>
             </div>
             </div>
           </div>
@@ -159,7 +159,7 @@ const MasterInvitation = () => {
             
             <div className="space-y-1 mt-2">
               <p className="font-serif text-lg text-textDark font-bold">Sunday, May 10</p>
-              <p className="font-serif text-xs text-textDark/80 leading-tight">5:00 PM - 10:00 PM<br/>Alankar Auditorium</p>
+              <p className="font-serif text-xs text-textDark/80 leading-tight">5:00 PM - 10:00 PM<br/>Opposite Sakkina Textiles</p>
             </div>
             </div>
           </div>

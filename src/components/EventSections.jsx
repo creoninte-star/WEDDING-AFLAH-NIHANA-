@@ -328,7 +328,7 @@ const EventSections = ({ onAllRevealed }) => {
   const handleReveal = () => setRevealed(true);
 
   const commonLocation = "https://maps.app.goo.gl/RwKWoFTofJcUiRMF9";
-  const commonVenue = "Alankar Auditorium, Calicut";
+  const commonVenue = "Opposite Sakkina Textiles";
 
   return (
     <div className="pb-16 flex flex-col items-center" ref={containerRef}>
@@ -371,7 +371,7 @@ const EventSections = ({ onAllRevealed }) => {
             <div className="pt-6 border-t border-gold/10">
               <h3 className="font-sans text-[9px] uppercase tracking-widest text-[#899E8F] mb-1 font-bold">Venue</h3>
               <p className="font-serif text-base text-textDark font-bold leading-tight">{commonVenue}</p>
-              <p className="font-serif text-[10px] text-textDark/60">Mathottam, Kozhikode (Calicut)</p>
+              <p className="font-serif text-[10px] text-textDark/60">Peravoor, Kannur, Kerala</p>
             </div>
 
             <motion.div className="pt-6">

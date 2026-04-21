@@ -28,8 +28,8 @@ const VenueMaps = () => {
         
         <div className="mb-4">
           <p className="font-sans text-[10px] uppercase tracking-widest text-sage mb-1">Location</p>
-          <p className="font-serif text-lg text-textDark/90">Alankar Auditorium</p>
-          <p className="font-serif text-sm text-textDark/70 mb-2">Mathottam, Kozhikode (Calicut)</p>
+          <p className="font-serif text-lg text-textDark/90">Opposite Sakkina Textiles</p>
+          <p className="font-serif text-sm text-textDark/70 mb-2">Peravoor, Kannur, Kerala</p>
         </div>
 
         {/* Live Embedded Map */}
@@ -38,7 +38,7 @@ const VenueMaps = () => {
           <div className="absolute inset-0 pointer-events-none mix-blend-color z-10 bg-[#e8dcc4] opacity-40"></div>
           
           <iframe 
-            src="https://maps.google.com/maps?q=Alankar%20Auditorium,%20Mathottam,%20Kozhikode,%20Kerala&t=&z=15&ie=UTF8&iwloc=&output=embed" 
+            src="https://maps.google.com/maps?q=Opposite%20Sakkina%20Textiles,%20Peravoor,%20Kannur,%20Kerala&t=&z=15&ie=UTF8&iwloc=&output=embed" 
             width="100%" 
             height="100%" 
             style={{ border: 0 }} 
