@@ -33,7 +33,8 @@ const FooterRSVP = () => {
       e.preventDefault();
       setIsSubmitting(true);
       
-      const scriptUrl = "https://script.google.com/macros/s/AKfycbw7tCSAkRcu0GF8pl2N90qWGH7PRbSrydTys2nohJXvsM3hHcIMB7rjyUOqrA8Cbsmu/exec";
+      // New Script URL provided by user
+      const scriptUrl = "https://script.google.com/macros/s/AKfycbx6GJE_xFjewjvqQWvNZLy0MK9Oy7nWTXWD6Zsrk4O3-yZnVQ1sXSFsPc52tEdEZNDJ/exec";
   
       try {
         const body = new URLSearchParams();
@@ -42,25 +43,25 @@ const FooterRSVP = () => {
         body.append('contactInfo', formData.contactInfo);
         body.append('guestCount', formData.guestCount);
         body.append('response', 'yes');
-        
+        body.append('timestamp', new Date().toLocaleString());
+
         await fetch(scriptUrl, {
           method: 'POST',
           mode: 'no-cors', 
-          cache: 'no-cache',
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
           },
           body: body.toString()
         });
         
-        // Save to localStorage on success
+        // Save to localStorage
         localStorage.setItem('wedding_rsvp_submitted', 'true');
         localStorage.setItem('wedding_rsvp_response', 'yes');
         setResponse('yes');
         setSubmitted(true);
       } catch (error) {
         console.error("Submission error:", error);
-        // Fallback: still lock the card but treat as success to avoid user frustration
+        // Fallback: still lock the card to provide a sense of completion
         localStorage.setItem('wedding_rsvp_submitted', 'true');
         localStorage.setItem('wedding_rsvp_response', 'yes');
         setResponse('yes');
