@@ -32,9 +32,9 @@ const DigitCounter = ({ value, revealed }) => {
 
   return (
     <motion.span 
-      className="font-serif text-[28px] text-gold mb-1 w-12 text-center inline-block"
+      className="font-serif text-[28px] text-primary-pink mb-1 w-12 text-center inline-block"
       animate={revealed ? { 
-        color: ['#655743', '#d4af37'],
+        color: ['#D9858F', '#9A4F63'],
       } : {}}
     >
       {String(displayValue).padStart(2, '0')}
@@ -62,31 +62,29 @@ const ScratchCardDate = ({ dateString, onReveal }) => {
     const ctx = canvas.getContext('2d');
     ctx.scale(dpr, dpr);
     
-    // Premium Metallic Gold Gradient for Scratch Cover
+    // Theme-Consistent Mauve/Pink Gradient for Scratch Cover
     const gradient = ctx.createLinearGradient(0, 0, rect.width, rect.height);
-    gradient.addColorStop(0, '#B8860B');
-    gradient.addColorStop(0.3, '#FFD700');
-    gradient.addColorStop(0.5, '#F1E1A6');
-    gradient.addColorStop(0.7, '#DAA520');
-    gradient.addColorStop(1, '#8B7500');
+    gradient.addColorStop(0, '#D9858F'); // Primary Pink
+    gradient.addColorStop(0.5, '#E8A0A6'); // Soft Pink
+    gradient.addColorStop(1, '#9A4F63'); // Secondary Mauve
     
     ctx.fillStyle = gradient;
     ctx.fillRect(0, 0, rect.width, rect.height);
     
     // Ornate Texture Pattern
-    ctx.globalAlpha = 0.15;
-    ctx.strokeStyle = '#000';
-    ctx.lineWidth = 0.5;
-    for (let i = 0; i < rect.width; i += 10) {
+    ctx.globalAlpha = 0.1;
+    ctx.strokeStyle = '#FFF';
+    ctx.lineWidth = 0.3;
+    for (let i = 0; i < rect.width; i += 8) {
       ctx.beginPath();
       ctx.moveTo(i, 0);
-      ctx.lineTo(i + 10, rect.height);
+      ctx.lineTo(i + 8, rect.height);
       ctx.stroke();
     }
     ctx.globalAlpha = 1.0;
 
     // Stylish Text on Foil
-    ctx.fillStyle = '#655743';
+    ctx.fillStyle = '#FFF';
     ctx.font = 'bold 11px Montserrat';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
@@ -95,7 +93,7 @@ const ScratchCardDate = ({ dateString, onReveal }) => {
 
     // Subtle Shine Line
     ctx.strokeStyle = 'rgba(255, 255, 255, 0.4)';
-    ctx.lineWidth = 2;
+    ctx.lineWidth = 1.5;
     ctx.beginPath();
     ctx.moveTo(0, rect.height);
     ctx.lineTo(rect.width, 0);
@@ -115,34 +113,12 @@ const ScratchCardDate = ({ dateString, onReveal }) => {
           particleCount: 600,
           spread: 160,
           origin: { x: xPos, y: yPos },
-          colors: ['#D4AF37', '#FAF6F0', '#655743', '#B68222', '#C5A039', '#899E8F'],
+          colors: ['#D9858F', '#9A4F63', '#F8EEF0', '#D8C2A0', '#6F3346'],
           disableForReducedMotion: true,
           gravity: 0.7,
           startVelocity: 55,
           scalar: 1.4,
           ticks: 400
-        });
-
-        const blasts = [
-          { x: 0.2, y: yPos + 0.1, delay: 150, angle: 60 },
-          { x: 0.8, y: yPos + 0.1, delay: 250, angle: 120 },
-          { x: 0.5, y: yPos - 0.2, delay: 400, angle: 90 },
-          { x: xPos, y: yPos, delay: 600, angle: 90, spread: 360 }
-        ];
-
-        blasts.forEach(blast => {
-          setTimeout(() => {
-            confetti({
-              particleCount: 120,
-              angle: blast.angle || 90,
-              spread: blast.spread || 70,
-              origin: { x: blast.x, y: blast.y },
-              colors: ['#D4AF37', '#FAF6F0', '#B68222'],
-              startVelocity: 30,
-              gravity: 1.1,
-              scalar: 1,
-            });
-          }, blast.delay);
         });
       }
     }
@@ -165,19 +141,19 @@ const ScratchCardDate = ({ dateString, onReveal }) => {
 
     setScratchCount(prev => {
       const next = prev + 1;
-      if (next % 3 === 0) {
+      if (next % 4 === 0) {
         confetti({
           particleCount: 15,
           spread: 80,
           origin: { x: clientX / window.innerWidth, y: clientY / window.innerHeight },
-          colors: ['#D4AF37', '#B68222', '#FAF6F0'],
+          colors: ['#D9858F', '#9A4F63', '#F8EEF0'],
           gravity: 2,
           startVelocity: 25,
           scalar: 0.8,
           ticks: 50
         });
       }
-      if (next > 22 && !revealed) setRevealed(true);
+      if (next > 20 && !revealed) setRevealed(true);
       return next;
     });
   };
@@ -189,25 +165,22 @@ const ScratchCardDate = ({ dateString, onReveal }) => {
   return (
     <div className="relative w-72 mx-auto my-8 group" ref={containerRef}>
       {/* Ornate Laser-Cut Border Frame */}
-      <div className="absolute -inset-2 border-2 border-gold/40 rounded-lg p-1">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 border-2 border-gold/40 rotate-45 bg-paper"></div>
-        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 w-4 h-4 border-2 border-gold/40 rotate-45 bg-paper"></div>
+      <div className="absolute -inset-2 border-2 border-primary-pink/30 rounded-lg p-1">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 border-2 border-primary-pink/30 rotate-45 bg-paper"></div>
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 w-4 h-4 border-2 border-primary-pink/30 rotate-45 bg-paper"></div>
       </div>
       
-      <div className="relative min-h-[56px] bg-white rounded border-[1.5px] border-gold/30 flex items-center justify-center p-1.5 shadow-xl overflow-hidden">
-         {/* Inner Bezel */}
-         <div className="absolute inset-0 border-[0.5px] border-black/5 rounded"></div>
-         
-         <div className="w-full h-full border border-gold/10 rounded flex items-center justify-center bg-[#FDFBF7] shadow-inner py-3">
-            <p className="font-serif text-[16px] tracking-[0.2em] text-textDark font-bold uppercase">{dateString}</p>
+      <div className="relative min-h-[56px] bg-white rounded border-[1.5px] border-primary-pink/20 flex items-center justify-center p-1.5 shadow-xl overflow-hidden">
+         <div className="w-full h-full border border-primary-pink/10 rounded flex items-center justify-center bg-paper shadow-inner py-3">
+            <p className="font-serif text-[16px] tracking-[0.2em] text-dark-accent font-bold uppercase">{dateString}</p>
          </div>
 
          {!revealed && (
           <motion.div 
             className="absolute inset-0 z-30 overflow-hidden"
             animate={{ 
-              x: [0, -2, 2, -2, 2, 0],
-              transition: { duration: 0.4, repeat: Infinity, repeatDelay: 3 }
+              x: [0, -1, 1, -1, 1, 0],
+              transition: { duration: 0.5, repeat: Infinity, repeatDelay: 4 }
             }}
           >
              <motion.canvas
@@ -223,9 +196,9 @@ const ScratchCardDate = ({ dateString, onReveal }) => {
             />
             {/* Shimmer Effect */}
             <motion.div 
-              className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent w-full pointer-events-none"
+              className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent w-full pointer-events-none"
               animate={{ x: ['-100%', '200%'] }}
-              transition={{ repeat: Infinity, duration: 2.5, ease: "linear" }}
+              transition={{ repeat: Infinity, duration: 3, ease: "linear" }}
             />
           </motion.div>
         )}
@@ -263,7 +236,7 @@ const CountdownDisplay = ({ targetDateIso, revealed }) => {
       {['days', 'hours', 'minutes', 'seconds'].map((interval) => (
         <div key={interval} className="flex flex-col items-center">
           <DigitCounter value={timeLeft[interval]} revealed={revealed} />
-          <span className="font-sans text-[7px] uppercase tracking-[0.2em] text-textDark/50">
+          <span className="font-sans text-[7px] uppercase tracking-[0.2em] text-dark-accent/50">
             {interval}
           </span>
         </div>
@@ -281,14 +254,12 @@ const EventSections = ({ onAllRevealed }) => {
   useEffect(() => {
     if (revealed) {
       if (onAllRevealed) onAllRevealed();
-      // Scroll to center on reveal with a more precise target
       setTimeout(() => {
         innerCardRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
       }, 500);
     }
   }, [revealed, onAllRevealed]);
 
-  // Highly optimized Pull-back logic for Mobile
   useEffect(() => {
     if (revealed) return;
 
@@ -301,14 +272,11 @@ const EventSections = ({ onAllRevealed }) => {
       const rect = innerCardRef.current.getBoundingClientRect();
       const viewportHeight = window.innerHeight;
       const currentScrollY = window.scrollY;
-      
       const isScrolledPast = rect.bottom < viewportHeight * 0.4;
       
       if (isScrolledPast && !hasScrolledPast && currentScrollY > lastScrollY) {
         setHasScrolledPast(true);
         isMovingValue = true;
-
-        // Snap back to center
         setTimeout(() => {
           if (!revealed) {
             innerCardRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -317,7 +285,6 @@ const EventSections = ({ onAllRevealed }) => {
           isMovingValue = false;
         }, 100);
       }
-      
       lastScrollY = currentScrollY;
     };
 
@@ -341,10 +308,10 @@ const EventSections = ({ onAllRevealed }) => {
       >
         <div 
           ref={innerCardRef}
-          className="border border-gold/30 rounded-t-[160px] rounded-b-xl p-8 bg-paper shadow-2xl embossed w-full max-w-sm relative"
+          className="border border-primary-pink/30 rounded-t-[160px] rounded-b-xl p-8 bg-paper shadow-2xl embossed w-full max-w-sm relative"
         >
-          <h2 className="font-serif text-3xl text-textDark mb-1 italic">Wedding Ceremonies</h2>
-          <div className="w-12 h-px bg-gold/40 mx-auto mb-4" />
+          <h2 className="font-serif text-3xl text-dark-accent mb-1 italic">Wedding Ceremonies</h2>
+          <div className="w-12 h-px bg-primary-pink/30 mx-auto mb-4" />
           
           <ScratchCardDate 
             dateString="Mark on Calendar" 
@@ -353,25 +320,25 @@ const EventSections = ({ onAllRevealed }) => {
           
           <div className="space-y-6 mt-8 text-center overflow-hidden">
             <div className={`transition-all duration-1000 ${revealed ? 'opacity-100 scale-100' : 'opacity-20 scale-95 blur-sm'}`}>
-              <h3 className="font-sans text-[9px] uppercase tracking-widest text-[#899E8F] mb-1 font-bold">Wedding Ceremony</h3>
-              <p className="font-serif text-xs text-gold font-bold italic tracking-wide mb-1">Dhuʻl-Qiʻdah 22</p>
-              <p className="font-serif text-lg text-textDark font-bold">Sunday, May 10</p>
+              <h3 className="font-sans text-[9px] uppercase tracking-widest text-primary-pink mb-1 font-bold">Wedding Ceremony</h3>
+              <p className="font-serif text-xs text-secondary-pink font-bold italic tracking-wide mb-1">Dhuʻl-Qiʻdah 22</p>
+              <p className="font-serif text-lg text-dark-accent font-bold">Sunday, May 10</p>
               
               <div className="flex flex-col items-center gap-1 mt-2 mb-4">
-                <p className="font-serif text-sm text-textDark/80">Btw 5:00 PM - 10:00 PM</p>
+                <p className="font-serif text-sm text-dark-accent/80">Btw 5:00 PM - 10:00 PM</p>
               </div>
 
               <CountdownDisplay targetDateIso="2026-05-10T17:00:00" revealed={revealed} />
               
-              <div className="mt-4 p-2 border border-gold/10 rounded-lg bg-gold/5">
-                <p className="font-sans text-[9px] text-sage font-bold tracking-[0.15em] uppercase italic">Lucky Draw: 10:00 PM</p>
+              <div className="mt-4 p-2 border border-primary-pink/10 rounded-lg bg-primary-pink/5">
+                <p className="font-sans text-[9px] text-secondary-pink font-bold tracking-[0.15em] uppercase italic">Lucky Draw: 10:00 PM</p>
               </div>
             </div>
 
-            <div className="pt-6 border-t border-gold/10">
-              <h3 className="font-sans text-[9px] uppercase tracking-widest text-[#899E8F] mb-1 font-bold">Venue</h3>
-              <p className="font-serif text-base text-textDark font-bold leading-tight">{commonVenue}</p>
-              <p className="font-serif text-[10px] text-textDark/60">Peravoor, Kannur, Kerala</p>
+            <div className="pt-6 border-t border-primary-pink/10">
+              <h3 className="font-sans text-[9px] uppercase tracking-widest text-primary-pink mb-1 font-bold">Venue</h3>
+              <p className="font-serif text-base text-dark-accent font-bold leading-tight">{commonVenue}</p>
+              <p className="font-serif text-[10px] text-dark-accent/60">Peravoor, Kannur, Kerala</p>
             </div>
 
             <motion.div className="pt-6">
@@ -379,7 +346,7 @@ const EventSections = ({ onAllRevealed }) => {
                 href={commonLocation}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-3 px-8 py-3 rounded-full border-2 border-gold/40 bg-white shadow-lg text-gold font-serif text-[13px] tracking-widest hover:bg-gold hover:text-white transition-all duration-500 uppercase italic font-bold"
+                className="inline-flex items-center gap-3 px-8 py-3 rounded-full border-2 border-primary-pink/40 bg-white shadow-lg text-primary-pink font-serif text-[13px] tracking-widest hover:bg-primary-pink hover:text-white transition-all duration-500 uppercase italic font-bold"
               >
                 <Map size={16} />
                 View Location

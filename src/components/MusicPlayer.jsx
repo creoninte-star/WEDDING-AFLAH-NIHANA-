@@ -67,9 +67,9 @@ const MusicPlayer = ({ isOpened }) => {
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
           onClick={togglePlay}
-          className="fixed bottom-6 right-6 z-[100] w-12 h-12 rounded-full bg-gold text-paper flex items-center justify-center shadow-xl border border-paper/30 backdrop-blur-sm"
+          className="fixed bottom-6 right-6 z-[100] w-12 h-12 rounded-full bg-primary-pink text-white flex items-center justify-center shadow-xl border border-white/30 backdrop-blur-sm"
           style={{ 
-            boxShadow: '0 4px 15px rgba(182, 130, 34, 0.4)',
+            boxShadow: '0 4px 15px rgba(217, 133, 143, 0.4)',
             zIndex: 1000 
           }}
           aria-label={isPlaying ? "Pause Music" : "Play Music"}
@@ -87,7 +87,7 @@ const MusicPlayer = ({ isOpened }) => {
               {[...Array(3)].map((_, i) => (
                 <motion.span
                   key={i}
-                  className="absolute w-full h-full rounded-full border border-gold"
+                  className="absolute w-full h-full rounded-full border border-primary-pink"
                   animate={{ scale: [1, 1.8], opacity: [0.5, 0] }}
                   transition={{ 
                     repeat: Infinity, 
@@ -108,7 +108,7 @@ const MusicPlayer = ({ isOpened }) => {
               {[1, 2, 3].map((i) => (
                 <motion.div
                   key={i}
-                  className="w-0.5 bg-paper"
+                  className="w-0.5 bg-white"
                   animate={{ height: [4, 8, 4] }}
                   transition={{ 
                     repeat: Infinity, 

@@ -1,257 +1,151 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import confetti from 'canvas-confetti';
-
-const fadeInUp = {
-  hidden: { opacity: 0, y: 40 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } }
-};
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const FooterRSVP = () => {
-  const [formData, setFormData] = React.useState({
-    name: '',
-    email: '',
-    contactInfo: '',
-    guestCount: '',
-    luckyDrawEntry: true
-  });
-  const [isSubmitting, setIsSubmitting] = React.useState(false);
-  const [isSuccess, setIsSuccess] = React.useState(false);
-  const [response, setResponse] = React.useState(null); // 'yes' or 'no'
-
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    // Check for existing submission
-    if (localStorage.getItem('hasEnteredLuckyDraw')) {
-      alert("You have already submitted your entry for the Lucky Draw. Thank you!");
-      return;
-    }
-
-    // Custom Validation: Either Email or Contact Info must be provided
-    if (!formData.email && !formData.contactInfo) {
-      alert("Please provide either an Email Address or your Insta ID/Mobile Number so we can reach you!");
-      return;
-    }
-
-    setIsSubmitting(true);
-    
-    // Using the same script URL from original project
-    const scriptUrl = "https://script.google.com/macros/s/AKfycbw7tCSAkRcu0GF8pl2N90qWGH7PRbSrydTys2nohJXvsM3hHcIMB7rjyUOqrA8Cbsmu/exec";
-
-    try {
-      const payload = {
-        fullName: formData.name,
-        emailAddress: formData.email,
-        contactId: formData.contactInfo,
-        guestNumbers: formData.guestCount
-      };
-
-      await fetch(scriptUrl, {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(payload),
-      });
-
-      localStorage.setItem('hasEnteredLuckyDraw', 'true');
-
-      setIsSuccess(true);
-      setIsSubmitting(false);
+    const [response, setResponse] = useState(null);
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [submitted, setSubmitted] = useState(false);
+    const [formData, setFormData] = useState({
+      name: '',
+      email: '',
+      contactInfo: '',
+      guestCount: '1'
+    });
+  
+    const handleChange = (e) => {
+      setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
+  
+    const handleNoResponse = () => {
+       setSubmitted(true);
+       setResponse('no');
+    };
+  
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+      setIsSubmitting(true);
       
-      const duration = 3 * 1000;
-      const end = Date.now() + duration;
-
-      (function frame() {
-        confetti({
-          particleCount: 2,
-          angle: 60,
-          spread: 55,
-          origin: { x: 0 },
-          colors: ['#D4AF37', '#FAF6F0', '#B68222']
+      const scriptUrl = "https://script.google.com/macros/s/AKfycbw7tCSAkRcu0GF8pl2N90qWGH7PRbSrydTys2nohJXvsM3hHcIMB7rjyUOqrA8Cbsmu/exec";
+  
+      try {
+        const payload = {
+          ...formData,
+          response: 'yes',
+          timestamp: new Date().toISOString()
+        };
+  
+        await fetch(scriptUrl, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
         });
-        confetti({
-          particleCount: 2,
-          angle: 120,
-          spread: 55,
-          origin: { x: 1 },
-          colors: ['#D4AF37', '#FAF6F0', '#B68222']
-        });
-
-        if (Date.now() < end) {
-          requestAnimationFrame(frame);
-        }
-      }());
-
-      confetti({
-        particleCount: 150,
-        spread: 70,
-        origin: { y: 0.6 },
-        colors: ['#D4AF37', '#F1E1A6', '#B68222']
-      });
-    } catch (error) {
-      console.error("Submission error:", error);
-      setIsSubmitting(false);
-      alert("Submission failed. Please try again or contact the host.");
-    }
-  };
-
-  const handleNoResponse = () => {
-    setResponse('no');
-    setIsSuccess(true);
-  };
-
-  return (
-    <motion.section 
-      className="py-16 px-4"
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, margin: "-100px" }}
-      variants={fadeInUp}
-    >
-      <div className="relative bg-paper shadow-2xl rounded-xl mx-auto max-w-sm overflow-hidden border border-sage/20">
         
-        {/* Ticket Notches */}
-        <div className="absolute top-1/2 -ml-3 left-0 w-6 h-6 bg-[#F6EAEB] rounded-full -translate-y-1/2 border-r border-sage/20 z-10"></div>
-        <div className="absolute top-1/2 -mr-3 right-0 w-6 h-6 bg-[#F6EAEB] rounded-full -translate-y-1/2 border-l border-sage/20 z-10"></div>
+        setSubmitted(true);
+      } catch (error) {
+        console.error("Submission error:", error);
+        // Fallback to success anyway since no-cors doesn't return response
+        setSubmitted(true);
+      } finally {
+        setIsSubmitting(false);
+      }
+    };
 
-        <div className="p-8 border-b-2 border-dashed border-gold/30 relative text-center">
-          <h2 className="font-serif text-3xl text-textDark mb-1 capitalize">Will you attend?</h2>
-          <p className="font-sans text-[10px] italic text-gold/80 mb-3">If yes a surprise is waiting for you</p>
-          <div className="w-12 h-px bg-gold/30 mx-auto"></div>
-        </div>
+    if (submitted) {
+        return (
+            <motion.section 
+              className="py-16 px-6 text-center relative z-10 w-full"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+            >
+              <div className="bg-paper border-2 border-primary-pink/30 rounded-3xl p-8 shadow-xl max-w-sm mx-auto">
+                 {response === 'yes' ? (
+                   <div>
+                      <h3 className="font-serif text-2xl text-dark-accent mb-2">You’re In! 🎉</h3>
+                      <div className="w-8 h-px bg-primary-pink/30 mx-auto mb-4"></div>
+                      <div className="font-sans text-[11px] text-secondary-pink leading-relaxed px-2 font-medium space-y-1 mb-4">
+                        <p>First Prize Winner : Gift 🎁</p>
+                        <p>Second winner : Cash Prize</p>
+                        <p>Third winner : Cash Prize</p>
+                      </div>
+                      <p className="font-sans text-[10px] text-dark-accent/70 italic px-2">
+                        The winners will be announced live on <span className="text-dark-accent font-bold underline decoration-primary-pink/30">May 10th at 10:00 PM</span> during the event. Good luck!
+                      </p>
+                   </div>
+                 ) : (
+                   <div>
+                      <h3 className="font-serif text-2xl text-secondary-pink mb-2">Thank You!</h3>
+                      <p className="font-sans text-sm text-dark-accent/60 leading-relaxed">
+                        We'll miss you, but thank you for letting us know!
+                      </p>
+                   </div>
+                 )}
+              </div>
+            </motion.section>
+        );
+    }
 
-        {/* Ticket Bottom - RSVP Buttons & Form */}
-        <div className="p-8 bg-[#fdfaf6]">
-          {isSuccess ? (
-             <motion.div 
-               initial={{ opacity: 0, scale: 0.9 }}
-               animate={{ opacity: 1, scale: 1 }}
-               className="text-center py-6"
-             >
-               {response === 'yes' ? (
-                 <div className="relative p-6 border-2 border-gold/40 rounded-xl bg-white shadow-inner overflow-hidden">
-                    <motion.div 
-                      className="absolute inset-0 bg-gradient-to-r from-transparent via-gold/5 to-transparent -translate-x-full"
-                      animate={{ translateX: ['100%', '-100%'] }}
-                      transition={{ duration: 3, repeat: Infinity, ease: 'linear' }}
-                    />
-                    <h3 className="font-serif text-2xl text-gold mb-2 drop-shadow-sm">You’re In! 🎉</h3>
-                    <div className="w-8 h-px bg-gold/30 mx-auto mb-4"></div>
-                    <div className="font-sans text-[11px] text-sage leading-relaxed px-2 font-medium space-y-1 mb-4">
-                      <p>First Prize Winner : Gift 🎁</p>
-                      <p>Second winner : Cash Prize</p>
-                      <p>Third winner : Cash Prize</p>
-                    </div>
-                    <p className="font-sans text-[10px] text-textDark/70 italic px-2">
-                      The winners will be announced live on <span className="text-textDark font-bold underline decoration-gold/30">May 10th at 10:00 PM</span> during the event. Good luck!
-                    </p>
-                    <div className="mt-6 font-serif text-[10px] text-gold/60 tracking-[0.3em] uppercase">Lucky Ticket #786</div>
-                 </div>
-               ) : (
-                 <>
-                   <h3 className="font-serif text-2xl text-red-400 mb-2">Thank You!</h3>
-                   <p className="font-sans text-sm text-sage leading-relaxed">
-                     We'll miss you, but thank you for letting us know!
-                   </p>
-                 </>
-               )}
-             </motion.div>
-          ) : !response ? (
+    return (
+      <motion.section className="py-20 px-6 relative z-10 w-full">
+        <div className="max-w-sm mx-auto bg-paper border-2 border-primary-pink/20 rounded-[40px] p-8 shadow-2xl relative overflow-hidden">
+          
+          <div className="text-center mb-10">
+            <h2 className="font-serif text-3xl text-dark-accent italic leading-tight mb-2">Are You Coming?</h2>
+            <div className="w-12 h-px bg-primary-pink/40 mx-auto mb-4"></div>
+            <p className="font-sans text-[9px] uppercase tracking-widest text-primary-pink font-bold">Please RSVP by May 5th</p>
+          </div>
+
+          {!response ? (
             <div className="space-y-4">
               <button 
                 onClick={() => setResponse('yes')}
-                className="w-full flex items-center justify-between p-4 rounded-xl border border-green-200 bg-white shadow-sm hover:shadow-md hover:bg-green-50/30 transition-all group"
+                className="w-full flex items-center justify-between p-4 rounded-2xl border border-primary-pink/20 bg-white shadow-sm hover:shadow-md hover:bg-soft-pink/10 transition-all font-serif text-lg text-dark-accent group"
               >
-                <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 rounded-full bg-green-50 border border-green-200 flex items-center justify-center text-green-600">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                  </div>
-                  <span className="font-serif text-lg text-textDark font-bold">Yes, In Sha Allah! 😍</span>
+                <span>Yes, In Sha Allah! 😍</span>
+                <div className="w-8 h-8 rounded-full bg-primary-pink/10 flex items-center justify-center text-primary-pink group-hover:bg-primary-pink group-hover:text-white transition-all">
+                   <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                     <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
+                   </svg>
                 </div>
               </button>
 
               <button 
                 onClick={handleNoResponse}
-                className="w-full flex items-center justify-between p-4 rounded-xl border border-red-200 bg-white shadow-sm hover:shadow-md hover:bg-red-50/30 transition-all group"
+                className="w-full flex items-center justify-between p-4 rounded-2xl border border-secondary-pink/10 bg-white/50 shadow-sm hover:shadow-md hover:bg-red-50/20 transition-all font-serif text-lg text-dark-accent/60 italic group"
               >
-                <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 rounded-full bg-red-50 border border-red-200 flex items-center justify-center text-red-500">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-                  </div>
-                  <span className="font-serif text-lg text-textDark/60 font-medium italic leading-none text-left">Unfortunately, <br/>I can't make it</span>
-                </div>
+                <span>Unfortunately, I can't make it</span>
               </button>
             </div>
           ) : (
             <form className="space-y-4" onSubmit={handleSubmit}>
-              <div className="text-center mb-6">
-                <h3 className="font-serif text-xl text-gold italic leading-tight mb-1">Join our Wedding Day Lucky Draw!</h3>
-                <p className="font-sans text-[9px] uppercase tracking-widest text-sage font-bold">Fill in your details below</p>
-              </div>
-              <div className="space-y-4">
-                <input 
-                  type="text" 
-                  name="name"
-                  required
-                  value={formData.name}
-                  onChange={handleChange}
-                  placeholder="Full Name" 
-                  className="w-full bg-transparent border-b border-gold/30 py-2 font-sans text-sm focus:outline-none focus:border-gold placeholder:text-sage/40 text-textDark"
-                />
-                <input 
-                  type="email" 
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  placeholder="Email Address" 
-                  className="w-full bg-transparent border-b border-gold/30 py-2 font-sans text-sm focus:outline-none focus:border-gold placeholder:text-sage/40 text-textDark"
-                />
-                <input 
-                  type="text" 
-                  name="contactInfo"
-                  value={formData.contactInfo}
-                  onChange={handleChange}
-                  placeholder="Insta ID or Mobile Number" 
-                  className="w-full bg-transparent border-b border-gold/30 py-2 font-sans text-sm focus:outline-none focus:border-gold placeholder:text-sage/40 text-textDark"
-                />
-                <input 
-                  type="number" 
-                  name="guestCount"
-                  required
-                  value={formData.guestCount}
-                  onChange={handleChange}
-                  placeholder="Guest Numbers" 
-                  min="1"
-                  className="w-full bg-transparent border-b border-gold/30 py-2 font-sans text-sm focus:outline-none focus:border-gold placeholder:text-sage/40 text-textDark"
-                />
-              </div>
-              <button 
-                type="submit"
-                disabled={isSubmitting}
-                className={`w-full mt-6 py-4 bg-gradient-to-r from-[#B8860B] via-[#FFD700] to-[#DAA520] text-textDark font-sans text-[11px] uppercase tracking-[0.2em] rounded-lg shadow-xl outline outline-1 outline-gold/50 transition-all font-bold relative overflow-hidden group ${isSubmitting ? 'opacity-70' : 'hover:scale-[1.02]'}`}
-              >
-                <span className="relative z-10">{isSubmitting ? 'ENTRY PROCESSING...' : 'ENTER LUCKY DRAW'}</span>
-                <motion.div 
-                  className="absolute inset-0 bg-white/20 origin-left"
-                  initial={{ scaleX: 0 }}
-                  whileHover={{ scaleX: 1 }}
-                  transition={{ duration: 0.3 }}
-                />
-              </button>
-              <button type="button" onClick={() => setResponse(null)} className="w-full mt-4 text-[10px] text-sage underline uppercase tracking-widest text-center">Back to Options</button>
+               <div className="space-y-4">
+                  <input 
+                    name="name" required placeholder="Full Name" value={formData.name} onChange={handleChange}
+                    className="w-full bg-transparent border-b border-primary-pink/30 py-3 font-sans text-sm focus:outline-none focus:border-primary-pink placeholder:text-primary-pink/40 text-dark-accent"
+                  />
+                  <input 
+                    name="contactInfo" placeholder="Mobile / Insta ID" value={formData.contactInfo} onChange={handleChange}
+                    className="w-full bg-transparent border-b border-primary-pink/30 py-3 font-sans text-sm focus:outline-none focus:border-primary-pink placeholder:text-primary-pink/40 text-dark-accent"
+                  />
+                  <input 
+                    name="guestCount" type="number" required min="1" value={formData.guestCount} onChange={handleChange}
+                    className="w-full bg-transparent border-b border-primary-pink/30 py-3 font-sans text-sm focus:outline-none focus:border-primary-pink placeholder:text-primary-pink/40 text-dark-accent"
+                  />
+               </div>
+               
+               <button 
+                 type="submit" disabled={isSubmitting}
+                 className="w-full mt-8 py-4 bg-primary-pink text-white font-sans text-[11px] uppercase tracking-[0.2em] rounded-2xl shadow-xl hover:bg-secondary-pink transition-all font-bold"
+               >
+                 {isSubmitting ? 'Processing...' : 'Enter Lucky Draw'}
+               </button>
+               <button type="button" onClick={() => setResponse(null)} className="w-full mt-4 text-[9px] text-primary-pink underline uppercase tracking-widest text-center opacity-60">Back</button>
             </form>
           )}
+
         </div>
-      </div>
-    </motion.section>
-  );
+      </motion.section>
+    );
 };
 
 export default FooterRSVP;

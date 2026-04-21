@@ -7,14 +7,15 @@ export default {
   theme: {
     extend: {
       colors: {
-        envelope: '#F6EAEB', // Soft blush pink base
-        paper: '#FAF6F0',   // Warm cream/beige
-        sage: '#899E8F',    // Deepened Sage green for contrast
-        gold: '#B68222',    // Deeper, high-contrast rich gold
-        'seal-red': '#A83B40', // Ivory/gold was requested but the description also called it "realistic ivory/gold Wax Seal"
-        'wax-seal': '#EADDCE', // Ivory/gold seal base
-        'wax-seal-border': '#D4AF37', // Gold 
-        textDark: '#2C2B29', // Dark gray for High-contrast typography
+        envelope: '#F8EEF0',      // Blush Ivory
+        paper: '#F8EEF0',         // Blush Ivory (Background)
+        'primary-pink': '#D9858F', // Dusty Blush Pink
+        'secondary-pink': '#9A4F63', // Rose Mauve
+        'dark-accent': '#6F3346',  // Plum Wine
+        gold: '#D8C2A0',          // Champagne Gold
+        'soft-pink': '#E8A0A6',   // Soft Veil Pink
+        textDark: '#6F3346',      // Using Plum Wine for text for high contrast on ivory
+        sage: '#D9858F',          // Replacing Sage with the primary dusty pink
       },
       fontFamily: {
         serif: ['"Cormorant Garamond"', 'serif'],

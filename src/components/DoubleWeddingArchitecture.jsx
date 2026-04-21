@@ -17,30 +17,30 @@ const MandalaBackdrop = ({ scrollYProgress }) => {
   return (
     <div className="absolute inset-0 pointer-events-none flex flex-col justify-between items-center overflow-hidden z-0">
       <motion.div 
-        className="w-[150vw] h-[150vw] sm:w-[800px] sm:h-[800px] -mt-[75vw] sm:-mt-[400px] rounded-full border border-gold/20 flex items-center justify-center"
+        className="w-[150vw] h-[150vw] sm:w-[800px] sm:h-[800px] -mt-[75vw] sm:-mt-[400px] rounded-full border border-soft-pink/20 flex items-center justify-center"
         style={{ rotate: rotation1, opacity, willChange: 'transform' }}
       >
-         <div className="w-[85%] h-[85%] rounded-full border border-gold/10" />
+         <div className="w-[85%] h-[85%] rounded-full border border-primary-pink/10" />
       </motion.div>
       <motion.div 
-        className="w-[150vw] h-[150vw] sm:w-[800px] sm:h-[800px] -mb-[75vw] sm:-mb-[400px] rounded-full border border-gold/20 flex items-center justify-center"
+        className="w-[150vw] h-[150vw] sm:w-[800px] sm:h-[800px] -mb-[75vw] sm:-mb-[400px] rounded-full border border-soft-pink/20 flex items-center justify-center"
         style={{ rotate: rotation2, opacity, willChange: 'transform' }}
       >
-         <div className="w-[85%] h-[85%] rounded-full border border-gold/10" />
+         <div className="w-[85%] h-[85%] rounded-full border border-primary-pink/10" />
       </motion.div>
     </div>
   );
 };
 
 const OrnateSingleCard = ({ pathDraw }) => (
-  <div className="w-full h-full relative p-6 flex flex-col items-center z-10 paper-bg bg-paper shadow-2xl rounded-t-[160px] rounded-b-xl border-[3px] border-white/40 overflow-hidden transform-gpu">
+  <div className="w-full h-full relative p-6 flex flex-col items-center z-10 paper-bg bg-paper shadow-2xl rounded-t-[160px] rounded-b-xl border-[3px] border-white/60 overflow-hidden transform-gpu">
     {/* Border Frame */}
-    <div className="absolute inset-0 rounded-t-[156px] rounded-b-lg border border-gold/20 pointer-events-none z-10"></div>
+    <div className="absolute inset-0 rounded-t-[156px] rounded-b-lg border border-primary-pink/20 pointer-events-none z-10"></div>
 
     <svg className="absolute inset-2 w-[calc(100%-16px)] h-[calc(100%-16px)] rounded-t-[140px] rounded-b-md pointer-events-none z-10" preserveAspectRatio="none">
       <motion.rect 
         width="100%" height="100%" rx="8" 
-        stroke="rgba(212,175,55,0.4)" strokeWidth="1.5" fill="none"
+        stroke="#D9858F" strokeWidth="1" fill="none" opacity="0.3"
         style={{ pathLength: pathDraw }}
       />
     </svg>
@@ -54,44 +54,44 @@ const OrnateSingleCard = ({ pathDraw }) => (
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 1.5 }}
       >
-        <span className="font-serif text-4xl text-gold italic drop-shadow-sm block mb-2">﷽</span>
-        <p className="font-serif text-[18px] sm:text-[20px] font-bold tracking-[0.05em] text-[#9A6D1C] italic leading-tight px-4">
+        <span className="font-serif text-4xl text-primary-pink italic drop-shadow-sm block mb-2">﷽</span>
+        <p className="font-serif text-[18px] sm:text-[20px] font-bold tracking-[0.05em] text-dark-accent italic leading-tight px-4">
           In the Name of Allah,<br /> the Most Gracious, the Most Merciful
         </p>
-        <div className="w-16 h-px bg-gold/30 mx-auto mt-4"></div>
+        <div className="w-16 h-px bg-gold/50 mx-auto mt-4"></div>
       </motion.div>
 
       {/* Main Couple Names */}
       <div className="flex items-center justify-center gap-4 w-full px-2 mb-8 mt-4">
         <div className="flex-1 text-center">
-          <h2 className="font-serif text-3xl sm:text-5xl text-textDark italic leading-tight drop-shadow-sm">
+          <h2 className="font-serif text-3xl sm:text-5xl text-dark-accent italic leading-tight drop-shadow-sm">
             Aflah
           </h2>
         </div>
         
         <div className="shrink-0 flex items-center justify-center">
-          <div className="text-gold text-3xl drop-shadow-sm opacity-60">♥</div>
+          <div className="text-primary-pink text-3xl drop-shadow-sm opacity-60">♥</div>
         </div>
 
         <div className="flex-1 text-center">
-          <h2 className="font-serif text-3xl sm:text-5xl text-textDark italic leading-tight drop-shadow-sm">
+          <h2 className="font-serif text-3xl sm:text-5xl text-dark-accent italic leading-tight drop-shadow-sm">
             Nihana
           </h2>
         </div>
       </div>
 
-      <p className="font-sans text-[10px] uppercase tracking-[0.3em] text-sage mb-6 font-bold">Together with their families</p>
+      <p className="font-sans text-[10px] uppercase tracking-[0.3em] text-secondary-pink mb-6 font-bold">Together with their families</p>
       
       {/* Parents Section */}
       <div className="space-y-6 mb-10 w-full">
          <div className="flex flex-col items-center">
-            <h3 className="font-serif text-lg text-textDark leading-tight">Mr. Abdul Azeez Haji & Mrs. Sakeena</h3>
-            <p className="font-sans text-[8px] uppercase tracking-widest text-gold font-bold">(Aflah's Parents)</p>
+            <h3 className="font-serif text-lg text-dark-accent leading-tight">Mr. Abdul Azeez Haji & Mrs. Sakeena</h3>
+            <p className="font-sans text-[8px] uppercase tracking-widest text-primary-pink font-bold">(Aflah's Parents)</p>
          </div>
 
          <div className="flex flex-col items-center">
-            <h3 className="font-serif text-lg text-textDark leading-tight">Mr. Nisar & Mrs. Sajna</h3>
-            <p className="font-sans text-[8px] uppercase tracking-widest text-gold font-bold">(Nihana's Parents)</p>
+            <h3 className="font-serif text-lg text-dark-accent leading-tight">Mr. Nisar & Mrs. Sajna</h3>
+            <p className="font-sans text-[8px] uppercase tracking-widest text-primary-pink font-bold">(Nihana's Parents)</p>
          </div>
       </div>
 
@@ -104,15 +104,15 @@ const OrnateSingleCard = ({ pathDraw }) => (
       >
         <PhotoSlideshow images={couplePhotos} />
         {/* Ornate Label Overlay */}
-        <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 bg-white px-6 py-2 rounded-t-xl border-t border-x border-gold/30 z-30">
-           <p className="font-serif text-[10px] text-gold uppercase tracking-[0.3em] font-bold">The Couple</p>
+        <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 bg-white px-6 py-2 rounded-t-xl border-t border-x border-primary-pink/20 z-30">
+           <p className="font-serif text-[10px] text-primary-pink uppercase tracking-[0.3em] font-bold">The Couple</p>
         </div>
       </motion.div>
 
-      <div className="w-full h-px bg-gold/10 mb-8 max-w-[200px]"></div>
+      <div className="w-full h-px bg-gold/40 mb-8 max-w-[200px]"></div>
 
       <motion.p 
-        className="font-sans text-[10px] uppercase tracking-[0.25em] text-sage font-bold px-6 leading-relaxed"
+        className="font-sans text-[10px] uppercase tracking-[0.25em] text-secondary-pink font-bold px-6 leading-relaxed"
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         transition={{ delay: 0.5 }}
