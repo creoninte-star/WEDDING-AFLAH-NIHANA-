@@ -123,6 +123,10 @@ const FooterRSVP = () => {
                     className="w-full bg-transparent border-b border-primary-pink/30 py-3 font-sans text-sm focus:outline-none focus:border-primary-pink placeholder:text-primary-pink/40 text-dark-accent"
                   />
                   <input 
+                    name="email" type="email" placeholder="Email Address (Optional)" value={formData.email} onChange={handleChange}
+                    className="w-full bg-transparent border-b border-primary-pink/30 py-3 font-sans text-sm focus:outline-none focus:border-primary-pink placeholder:text-primary-pink/40 text-dark-accent"
+                  />
+                  <input 
                     name="contactInfo" placeholder="Mobile / Insta ID" value={formData.contactInfo} onChange={handleChange}
                     className="w-full bg-transparent border-b border-primary-pink/30 py-3 font-sans text-sm focus:outline-none focus:border-primary-pink placeholder:text-primary-pink/40 text-dark-accent"
                   />
