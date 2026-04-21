@@ -1,16 +1,13 @@
 import React, { useRef } from 'react';
-import { motion, useScroll, useTransform, useMotionTemplate } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import PhotoSlideshow from './PhotoSlideshow';
 
-
-const Rings = () => (
-  <motion.div 
-    className="relative w-12 h-8 mx-auto mb-2 flex justify-center"
-  >
-    <div className="absolute w-6 h-6 rounded-full border-2 border-gold shadow-sm -translate-x-[20%]"></div>
-    <div className="absolute w-6 h-6 rounded-full border-[1.5px] border-gold/70 shadow-sm translate-x-[20%]"></div>
-  </motion.div>
-);
+const couplePhotos = [
+  "/aflah and nihana/WhatsApp Image 2026-04-21 at 6.13.42 PM (1).jpeg",
+  "/aflah and nihana/WhatsApp Image 2026-04-21 at 6.13.42 PM.jpeg",
+  "/aflah and nihana/WhatsApp Image 2026-04-21 at 6.13.43 PM (1).jpeg",
+  "/aflah and nihana/WhatsApp Image 2026-04-21 at 6.13.43 PM.jpeg"
+];
 
 const MandalaBackdrop = ({ scrollYProgress }) => {
   const rotation1 = useTransform(scrollYProgress, [0, 1], [0, 180]);
@@ -48,13 +45,28 @@ const OrnateSingleCard = ({ pathDraw }) => (
       />
     </svg>
 
-    <div className="mt-8 z-20 w-full flex flex-col items-center px-4 text-center">
+    <div className="z-20 w-full flex flex-col items-center px-4 text-center mt-4">
+      
+      {/* Premium Photo Placeholder / Slideshow */}
+      <motion.div 
+        className="w-full aspect-[4/5] rounded-t-[120px] rounded-b-2xl overflow-hidden shadow-2xl border-4 border-white mb-8 relative"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1.2 }}
+      >
+        <PhotoSlideshow images={couplePhotos} />
+        {/* Ornate Label Overlay */}
+        <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 bg-white px-6 py-2 rounded-t-xl border-t border-x border-gold/30 z-30">
+           <p className="font-serif text-[10px] text-gold uppercase tracking-[0.3em] font-bold">The Couple</p>
+        </div>
+      </motion.div>
+
       {/* Original Bismillah Design with English Translation */}
       <motion.div 
         className="mb-8"
         initial={{ opacity: 0, y: 10 }}
         whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1.5 }}
+        transition={{ duration: 1.5, delay: 0.3 }}
       >
         <span className="font-serif text-4xl text-gold italic drop-shadow-sm block mb-2">﷽</span>
         <p className="font-serif text-[18px] sm:text-[20px] font-bold tracking-[0.05em] text-[#9A6D1C] italic leading-tight px-4">
@@ -99,7 +111,6 @@ const OrnateSingleCard = ({ pathDraw }) => (
 
       <div className="w-full h-px bg-gold/10 mb-8 max-w-[200px]"></div>
 
-
       <motion.p 
         className="font-sans text-[10px] uppercase tracking-[0.25em] text-sage font-bold px-6 leading-relaxed"
         initial={{ opacity: 0 }}
@@ -127,7 +138,7 @@ const DoubleWeddingArchitecture = () => {
         <MandalaBackdrop scrollYProgress={scrollYProgress} />
   
         <motion.div
-          className="relative w-[92%] max-w-sm min-h-[640px] z-20 pointer-events-auto"
+          className="relative w-[92%] max-w-sm min-h-[800px] z-20 pointer-events-auto"
           initial={{ opacity: 0, scale: 0.95, y: 50 }}
           whileInView={{ opacity: 1, scale: 1, y: 0 }}
           viewport={{ once: false, amount: 0.2 }}
