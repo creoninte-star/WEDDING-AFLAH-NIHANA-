@@ -79,8 +79,8 @@ const FooterRSVP = () => {
                    </div>
                  ) : (
                    <div>
-                      <h3 className="font-serif text-2xl text-secondary-pink mb-2">Thank You!</h3>
-                      <p className="font-sans text-sm text-dark-accent/60 leading-relaxed">
+                      <h3 className="font-serif text-2xl text-rose-800 mb-2">Thank You!</h3>
+                      <p className="font-sans text-sm text-rose-900/60 leading-relaxed">
                         We'll miss you, but thank you for letting us know!
                       </p>
                    </div>
@@ -97,13 +97,11 @@ const FooterRSVP = () => {
           <div className="text-center mb-8">
             <h2 className="font-serif text-3xl text-dark-accent italic leading-tight mb-2">Are You Coming?</h2>
             <div className="w-12 h-px bg-primary-pink/40 mx-auto mb-4"></div>
-            {/* Added Surprise Text */}
             <p className="font-sans text-[10px] text-primary-pink italic font-bold tracking-tight animate-pulse">If yes, a surprise is waiting for you</p>
           </div>
 
           {!response ? (
             <div className="space-y-4">
-              {/* Styled In Sha Allah Button with Green Theme */}
               <button 
                 onClick={() => setResponse('yes_init')}
                 className="w-full flex items-center justify-between p-4 rounded-2xl border-2 border-emerald-100 bg-emerald-50/30 shadow-sm hover:shadow-md hover:bg-emerald-50 transition-all font-serif text-lg text-emerald-800 group"
@@ -116,10 +114,9 @@ const FooterRSVP = () => {
                 </div>
               </button>
 
-              {/* Styled No Button with Red/Mauve Theme */}
               <button 
                 onClick={handleNoResponse}
-                className="w-full flex items-center justify-between p-4 rounded-2xl border border-rose-100 bg-rose-50/20 shadow-sm hover:shadow-md hover:bg-rose-50/50 transition-all font-serif text-lg text-rose-800/60 italic group"
+                className="w-full flex items-center justify-between p-4 rounded-2xl border-2 border-rose-200 bg-rose-50 shadow-sm hover:shadow-md hover:bg-rose-100 transition-all font-serif text-lg text-rose-700 font-bold italic group"
               >
                 <span>Unfortunately, I can't make it</span>
               </button>
