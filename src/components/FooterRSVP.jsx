@@ -41,7 +41,7 @@ const FooterRSVP = () => {
     setIsSubmitting(true);
     
     // Using the same script URL from original project
-    const scriptUrl = "";
+    const scriptUrl = "https://script.google.com/macros/s/AKfycbw7tCSAkRcu0GF8pl2N90qWGH7PRbSrydTys2nohJXvsM3hHcIMB7rjyUOqrA8Cbsmu/exec";
 
     try {
       const payload = {
