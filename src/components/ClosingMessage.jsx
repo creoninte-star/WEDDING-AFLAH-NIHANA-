@@ -36,7 +36,7 @@ const ClosingMessage = () => {
 
         {/* Invitation Message */}
         <p className="font-sans text-[10px] sm:text-[11px] leading-loose tracking-[0.15em] uppercase text-textDark/80 mb-6 max-w-[320px]">
-          Insha Allah, your esteemed presence and heartfelt prayers are the most beautiful gifts we could ask for on this blessed occasion. 
+          In Sha Allah, your esteemed presence and heartfelt prayers are the most beautiful gifts we could ask for on this blessed occasion. 
           <br/><br/>
           We, along with our families, warmly invite you to share our joy.
         </p>
@@ -47,9 +47,20 @@ const ClosingMessage = () => {
         <h3 className="font-serif text-2xl sm:text-3xl text-gold italic drop-shadow-sm">
           With Love & Duas
         </h3>
-        <p className="font-sans text-[8px] sm:text-[9px] uppercase tracking-[0.4em] text-sage font-bold mt-4">
-          The Families
-        </p>
+        <div className="mt-4">
+          <p className="font-sans text-[8px] uppercase tracking-[0.2em] text-gold mb-2 font-bold">Siblings</p>
+          <p className="font-sans text-[9px] sm:text-[10px] uppercase tracking-[0.2em] text-textDark/60 font-medium leading-relaxed">
+            Ajmal, Amaan & Rooha Fathima<br/> 
+            & Families
+          </p>
+        </div>
+
+        {/* Attribution */}
+        <div className="mt-20 pb-4">
+          <p className="font-sans text-[9px] tracking-[0.2em] uppercase text-textDark/40">
+            Made With ❤️ By <a href="https://wa.me/message/6ZQ3JI2ZRT33C1" target="_blank" rel="noopener noreferrer" className="text-gold hover:text-gold/80 transition-colors duration-300 font-bold">Creon</a>
+          </p>
+        </div>
 
       </div>
     </motion.section>

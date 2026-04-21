@@ -1,13 +1,50 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, animate } from 'framer-motion';
+import confetti from 'canvas-confetti';
+import { Map } from 'lucide-react';
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 40 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } }
 };
 
+const DigitCounter = ({ value, revealed }) => {
+  const [displayValue, setDisplayValue] = useState(0);
+  const hasAnimated = useRef(false);
+
+  useEffect(() => {
+    if (revealed && !hasAnimated.current) {
+      const targetValue = parseInt(value) || 0;
+      const controls = animate(0, targetValue, {
+        duration: 1.2,
+        ease: "easeOut",
+        onUpdate: (latest) => setDisplayValue(Math.floor(latest))
+      });
+      hasAnimated.current = true;
+      return () => controls.stop();
+    } else if (revealed) {
+      setDisplayValue(parseInt(value) || 0);
+    } else {
+      setDisplayValue(0);
+      hasAnimated.current = false;
+    }
+  }, [revealed, value]);
+
+  return (
+    <motion.span 
+      className="font-serif text-[28px] text-gold mb-1 w-12 text-center inline-block"
+      animate={revealed ? { 
+        color: ['#655743', '#d4af37'],
+      } : {}}
+    >
+      {String(displayValue).padStart(2, '0')}
+    </motion.span>
+  );
+};
+
 const ScratchCardDate = ({ dateString, onReveal }) => {
   const canvasRef = useRef(null);
+  const containerRef = useRef(null);
   const [isScratching, setIsScratching] = useState(false);
   const [revealed, setRevealed] = useState(false);
   const [scratchCount, setScratchCount] = useState(0);
@@ -16,7 +53,6 @@ const ScratchCardDate = ({ dateString, onReveal }) => {
     const canvas = canvasRef.current;
     if (!canvas || revealed) return;
     
-    // Handle high DPI displays for crisp text
     const dpr = window.devicePixelRatio || 1;
     const rect = canvas.getBoundingClientRect();
     
@@ -26,206 +62,342 @@ const ScratchCardDate = ({ dateString, onReveal }) => {
     const ctx = canvas.getContext('2d');
     ctx.scale(dpr, dpr);
     
-    // Fill background gradient (looks like a gold foil card)
+    // Premium Metallic Gold Gradient for Scratch Cover
     const gradient = ctx.createLinearGradient(0, 0, rect.width, rect.height);
-    gradient.addColorStop(0, '#d8ccba');
-    gradient.addColorStop(0.5, '#eaddce');
-    gradient.addColorStop(1, '#c5b597');
+    gradient.addColorStop(0, '#B8860B');
+    gradient.addColorStop(0.3, '#FFD700');
+    gradient.addColorStop(0.5, '#F1E1A6');
+    gradient.addColorStop(0.7, '#DAA520');
+    gradient.addColorStop(1, '#8B7500');
+    
     ctx.fillStyle = gradient;
     ctx.fillRect(0, 0, rect.width, rect.height);
     
-    // Add text "SCRATCH TO REVEAL DATE"
+    // Ornate Texture Pattern
+    ctx.globalAlpha = 0.15;
+    ctx.strokeStyle = '#000';
+    ctx.lineWidth = 0.5;
+    for (let i = 0; i < rect.width; i += 10) {
+      ctx.beginPath();
+      ctx.moveTo(i, 0);
+      ctx.lineTo(i + 10, rect.height);
+      ctx.stroke();
+    }
+    ctx.globalAlpha = 1.0;
+
+    // Stylish Text on Foil
     ctx.fillStyle = '#655743';
-    ctx.font = '8px Montserrat';
+    ctx.font = 'bold 11px Montserrat';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    ctx.letterSpacing = '1px';
+    ctx.letterSpacing = '3px';
     ctx.fillText('SCRATCH TO REVEAL', rect.width / 2, rect.height / 2);
+
+    // Subtle Shine Line
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.4)';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(0, rect.height);
+    ctx.lineTo(rect.width, 0);
+    ctx.stroke();
+
+  }, [revealed]);
+
+  useEffect(() => {
+    if (revealed) {
+      onReveal();
+      if (canvasRef.current) {
+        const rect = canvasRef.current.getBoundingClientRect();
+        const xPos = (rect.left + rect.width / 2) / window.innerWidth;
+        const yPos = (rect.top + rect.height / 2) / window.innerHeight;
+        
+        confetti({
+          particleCount: 600,
+          spread: 160,
+          origin: { x: xPos, y: yPos },
+          colors: ['#D4AF37', '#FAF6F0', '#655743', '#B68222', '#C5A039', '#899E8F'],
+          disableForReducedMotion: true,
+          gravity: 0.7,
+          startVelocity: 55,
+          scalar: 1.4,
+          ticks: 400
+        });
+
+        const blasts = [
+          { x: 0.2, y: yPos + 0.1, delay: 150, angle: 60 },
+          { x: 0.8, y: yPos + 0.1, delay: 250, angle: 120 },
+          { x: 0.5, y: yPos - 0.2, delay: 400, angle: 90 },
+          { x: xPos, y: yPos, delay: 600, angle: 90, spread: 360 }
+        ];
+
+        blasts.forEach(blast => {
+          setTimeout(() => {
+            confetti({
+              particleCount: 120,
+              angle: blast.angle || 90,
+              spread: blast.spread || 70,
+              origin: { x: blast.x, y: blast.y },
+              colors: ['#D4AF37', '#FAF6F0', '#B68222'],
+              startVelocity: 30,
+              gravity: 1.1,
+              scalar: 1,
+            });
+          }, blast.delay);
+        });
+      }
+    }
   }, [revealed]);
 
   const scratch = (e) => {
-    if (revealed) return;
-    
+    if (revealed || !canvasRef.current) return;
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
     const rect = canvas.getBoundingClientRect();
-    
-    // Normalize coordinates for device pixel ratio
-    const dpr = window.devicePixelRatio || 1;
-    
     const clientX = e.touches ? e.touches[0].clientX : e.clientX;
     const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-    
     const x = clientX - rect.left;
     const y = clientY - rect.top;
 
     ctx.globalCompositeOperation = 'destination-out';
     ctx.beginPath();
-    ctx.arc(x, y, 12, 0, Math.PI * 2);
+    ctx.arc(x, y, 20, 0, Math.PI * 2);
     ctx.fill();
 
     setScratchCount(prev => {
       const next = prev + 1;
-      if (next > 25) { // Scratch threshold reached
-        setRevealed(true);
-        onReveal();
+      if (next % 3 === 0) {
+        confetti({
+          particleCount: 15,
+          spread: 80,
+          origin: { x: clientX / window.innerWidth, y: clientY / window.innerHeight },
+          colors: ['#D4AF37', '#B68222', '#FAF6F0'],
+          gravity: 2,
+          startVelocity: 25,
+          scalar: 0.8,
+          ticks: 50
+        });
       }
+      if (next > 22 && !revealed) setRevealed(true);
       return next;
     });
   };
 
-  const handleDown = (e) => {
-    setIsScratching(true);
-    scratch(e);
-  };
-  
+  const handleDown = e => { setIsScratching(true); scratch(e); };
   const handleUp = () => setIsScratching(false);
-  
-  const handleMove = (e) => {
-    // Prevent default scrolling when touching the canvas to allow scratch interaction
-    if (e.cancelable && e.touches) {
-      e.preventDefault();
-    }
-    if (!isScratching) return;
-    scratch(e);
-  };
+  const handleMove = e => { if (isScratching) { if (e.cancelable) e.preventDefault(); scratch(e); } };
 
   return (
-    <div className="relative w-48 h-8 mx-auto my-2 group cursor-crosshair">
-      {/* The actual date underneath */}
-      <div className="absolute inset-0 flex items-center justify-center bg-envelope/30 rounded border border-gold/20">
-        <p className="font-sans text-[10px] font-bold uppercase tracking-widest text-textDark drop-shadow-sm">{dateString}</p>
+    <div className="relative w-72 mx-auto my-8 group" ref={containerRef}>
+      {/* Ornate Laser-Cut Border Frame */}
+      <div className="absolute -inset-2 border-2 border-gold/40 rounded-lg p-1">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 border-2 border-gold/40 rotate-45 bg-paper"></div>
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 w-4 h-4 border-2 border-gold/40 rotate-45 bg-paper"></div>
       </div>
+      
+      <div className="relative min-h-[56px] bg-white rounded border-[1.5px] border-gold/30 flex items-center justify-center p-1.5 shadow-xl overflow-hidden">
+         {/* Inner Bezel */}
+         <div className="absolute inset-0 border-[0.5px] border-black/5 rounded"></div>
+         
+         <div className="w-full h-full border border-gold/10 rounded flex items-center justify-center bg-[#FDFBF7] shadow-inner py-3">
+            <p className="font-serif text-[16px] tracking-[0.2em] text-textDark font-bold uppercase">{dateString}</p>
+         </div>
 
-      {/* The Scratch Canvas */}
-      <AnimatePresence>
-        {!revealed && (
-          <motion.canvas
-            ref={canvasRef}
-            className="absolute inset-0 w-full h-full rounded shadow-sm touch-none"
-            onMouseDown={handleDown}
-            onMouseUp={handleUp}
-            onMouseLeave={handleUp}
-            onMouseMove={handleMove}
-            onTouchStart={handleDown}
-            onTouchEnd={handleUp}
-            onTouchMove={handleMove}
-            exit={{ opacity: 0, scale: 1.05, transition: { duration: 0.6 } }}
-          />
+         {!revealed && (
+          <motion.div 
+            className="absolute inset-0 z-30 overflow-hidden"
+            animate={{ 
+              x: [0, -2, 2, -2, 2, 0],
+              transition: { duration: 0.4, repeat: Infinity, repeatDelay: 3 }
+            }}
+          >
+             <motion.canvas
+              ref={canvasRef}
+              className="w-full h-full touch-none cursor-crosshair"
+              onMouseDown={handleDown}
+              onMouseUp={handleUp}
+              onMouseLeave={handleUp}
+              onMouseMove={handleMove}
+              onTouchStart={handleDown}
+              onTouchEnd={handleUp}
+              onTouchMove={handleMove}
+            />
+            {/* Shimmer Effect */}
+            <motion.div 
+              className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent w-full pointer-events-none"
+              animate={{ x: ['-100%', '200%'] }}
+              transition={{ repeat: Infinity, duration: 2.5, ease: "linear" }}
+            />
+          </motion.div>
         )}
-      </AnimatePresence>
+      </div>
     </div>
   );
 };
 
-const EventCard = ({ title, dateString, targetDateIso, time, highlight, venue }) => {
-  const [revealed, setRevealed] = useState(false);
-  
-  const calculateTimeLeft = () => {
-    if (!revealed) return { days: 0, hours: 0, minutes: 0, seconds: 0 };
-    
-    const difference = +new Date(targetDateIso) - +new Date();
-    let timeLeft = {};
 
-    if (difference > 0) {
-      timeLeft = {
-        days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-        hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
-        minutes: Math.floor((difference / 1000 / 60) % 60),
-        seconds: Math.floor((difference / 1000) % 60),
-      };
-    } else {
-      timeLeft = { days: 0, hours: 0, minutes: 0, seconds: 0 };
-    }
-    return timeLeft;
+const CountdownDisplay = ({ targetDateIso, revealed }) => {
+  const calculateTimeLeft = () => {
+    const difference = +new Date(targetDateIso) - +new Date();
+    if (difference <= 0) return { days: '00', hours: '00', minutes: '00', seconds: '00' };
+
+    return {
+      days: String(Math.floor(difference / (1000 * 60 * 60 * 24))).padStart(2, '0'),
+      hours: String(Math.floor((difference / (1000 * 60 * 60)) % 24)).padStart(2, '0'),
+      minutes: String(Math.floor((difference / 1000 / 60) % 60)).padStart(2, '0'),
+      seconds: String(Math.floor((difference / 1000) % 60)).padStart(2, '0'),
+    };
   };
 
-  const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+  const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
 
   useEffect(() => {
-    if (!revealed) return; // Keep zeros if not scratched
-    
-    setTimeLeft(calculateTimeLeft()); // Initial set after reveal
+    if (!revealed) return;
     const timer = setInterval(() => {
       setTimeLeft(calculateTimeLeft());
     }, 1000);
     return () => clearInterval(timer);
-  }, [revealed, targetDateIso]); // Re-run when revealed state changes
+  }, [targetDateIso, revealed]);
 
   return (
-    <motion.section 
-      className="py-8 px-6 text-center bg-envelope relative z-10 embossed mt-4 w-full"
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, margin: "-50px" }}
-      variants={fadeInUp}
-    >
-      <div className="border border-gold/30 rounded-t-full p-8 bg-paper shadow-md">
-        <h2 className="font-serif text-3xl sm:text-4xl text-textDark mb-2 italic">{title}</h2>
-        <div className="w-16 h-px bg-gold/50 mx-auto mb-4"></div>
-        
-        {/* The New Interactive Scratch Card Area */}
-        <ScratchCardDate 
-          dateString={dateString} 
-          onReveal={() => setRevealed(true)} 
-        />
-        
-        {/* Minimalist Countdown */}
-        <div className="flex justify-center gap-4 my-8">
-          {['days', 'hours', 'minutes', 'seconds'].map((interval) => (
-            <div key={interval} className="flex flex-col items-center">
-              <motion.span 
-                className="font-serif text-2xl text-gold mb-1 w-10 text-center"
-                animate={revealed ? { scale: [1.2, 1], color: ['#655743', '#d4af37'] } : {}}
-                transition={{ duration: 0.5 }}
-              >
-                {timeLeft[interval] || '0'}
-              </motion.span>
-              <span className="font-sans text-[8px] uppercase tracking-widest text-textDark/60">
-                {interval}
-              </span>
-            </div>
-          ))}
+    <div className="flex justify-center gap-3 my-4">
+      {['days', 'hours', 'minutes', 'seconds'].map((interval) => (
+        <div key={interval} className="flex flex-col items-center">
+          <DigitCounter value={timeLeft[interval]} revealed={revealed} />
+          <span className="font-sans text-[7px] uppercase tracking-[0.2em] text-textDark/50">
+            {interval}
+          </span>
         </div>
-
-        <div className="space-y-4 mb-2">
-          <div>
-            <h3 className="font-sans text-[9px] uppercase tracking-wider text-sage mb-1">Time</h3>
-            <p className="font-serif text-base sm:text-lg">{time}</p>
-            {highlight && (
-              <p className="font-serif text-xs italic text-gold mt-1">{highlight}</p>
-            )}
-          </div>
-          <div className="w-8 h-px bg-sage/30 mx-auto"></div>
-          <div>
-            <h3 className="font-sans text-[9px] uppercase tracking-wider text-sage mb-1">Venue</h3>
-            <p className="font-serif text-base sm:text-lg">{venue}</p>
-          </div>
-        </div>
-      </div>
-    </motion.section>
+      ))}
+    </div>
   );
 };
 
-const EventSections = () => {
+const EventSections = ({ onAllRevealed }) => {
+  const [revealed, setRevealed] = useState(false);
+  const containerRef = useRef(null);
+  const innerCardRef = useRef(null);
+  const [hasScrolledPast, setHasScrolledPast] = useState(false);
+
+  useEffect(() => {
+    if (revealed) {
+      if (onAllRevealed) onAllRevealed();
+      // Scroll to center on reveal with a more precise target
+      setTimeout(() => {
+        innerCardRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 500);
+    }
+  }, [revealed, onAllRevealed]);
+
+  // Highly optimized Pull-back logic for Mobile
+  useEffect(() => {
+    if (revealed) return;
+
+    let lastScrollY = window.scrollY;
+    let isMovingValue = false;
+
+    const handleScroll = () => {
+      if (!innerCardRef.current || revealed || isMovingValue) return;
+
+      const rect = innerCardRef.current.getBoundingClientRect();
+      const viewportHeight = window.innerHeight;
+      const currentScrollY = window.scrollY;
+      
+      const isScrolledPast = rect.bottom < viewportHeight * 0.4;
+      
+      if (isScrolledPast && !hasScrolledPast && currentScrollY > lastScrollY) {
+        setHasScrolledPast(true);
+        isMovingValue = true;
+
+        // Snap back to center
+        setTimeout(() => {
+          if (!revealed) {
+            innerCardRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+          setHasScrolledPast(false); 
+          isMovingValue = false;
+        }, 100);
+      }
+      
+      lastScrollY = currentScrollY;
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [revealed, hasScrolledPast]);
+
+  const handleReveal = () => setRevealed(true);
+
+  const commonLocation = "https://maps.google.com/maps?q=Alankar%20Auditorium,%20Mathottam,%20Kozhikode,%20Kerala";
+  const commonVenue = "Alankar Auditorium, Calicut";
+
   return (
-    <div className="pb-16 flex flex-col items-center">
-      <EventCard 
-        title="Nikkah Ceremony"
-        dateString="May 6, 2026"
-        targetDateIso="2026-05-06T16:00:00"
-        time="After Asar (4:00 PM onwards)"
-        highlight="Bride Entry: 5:30 PM - 6:00 PM"
-        venue="Zareena Manzil, Koothparamba"
-      />
-      <EventCard 
-        title="Marriage Function"
-        dateString="May 7, 2026"
-        targetDateIso="2026-05-07T12:00:00"
-        time="Starting at 12:00 PM"
-        highlight={null}
-        venue="Vajra Auditorium, Mooriyad Road"
-      />
+    <div className="pb-16 flex flex-col items-center" ref={containerRef}>
+      <motion.section 
+        className="min-h-[85vh] flex flex-col items-center justify-center py-10 px-6 text-center relative z-10 w-full"
+        initial={{ opacity: 0, scale: 0.9 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        viewport={{ once: false, margin: "-100px" }}
+        transition={{ type: "spring", stiffness: 50 }}
+      >
+        <div 
+          ref={innerCardRef}
+          className="border border-gold/30 rounded-t-[160px] rounded-b-xl p-8 bg-paper shadow-2xl embossed w-full max-w-sm relative"
+        >
+          <h2 className="font-serif text-3xl text-textDark mb-1 italic">Wedding Ceremonies</h2>
+          <div className="w-12 h-px bg-gold/40 mx-auto mb-4" />
+          
+          <ScratchCardDate 
+            dateString="Mark on Calendar" 
+            onReveal={handleReveal} 
+          />
+          
+          <div className="space-y-6 mt-8 text-center overflow-hidden">
+            <div className={`transition-all duration-1000 ${revealed ? 'opacity-100 scale-100' : 'opacity-20 scale-95 blur-sm'}`}>
+              <h3 className="font-sans text-[9px] uppercase tracking-widest text-[#899E8F] mb-1 font-bold">Nikkah Ceremony</h3>
+              <p className="font-serif text-xs text-gold font-bold italic tracking-wide mb-1">Dhuʻl-Qiʻdah 21</p>
+              <p className="font-serif text-lg text-textDark font-bold">Saturday, May 9</p>
+              <p className="font-sans text-[10px] text-gold font-bold uppercase tracking-[0.2em] mt-2 underline decoration-gold/30 underline-offset-4 mb-4">10:30 AM</p>
+              <CountdownDisplay targetDateIso="2026-05-09T10:30:00" revealed={revealed} />
+            </div>
+
+            <div className="w-16 h-px bg-gold/20 mx-auto my-4"></div>
+
+            <div className={`transition-all duration-1000 ${revealed ? 'opacity-100 scale-100' : 'opacity-20 scale-95 blur-sm'}`}>
+              <h3 className="font-sans text-[9px] uppercase tracking-widest text-[#899E8F] mb-1 font-bold">Wedding Ceremony</h3>
+              <p className="font-serif text-xs text-gold font-bold italic tracking-wide mb-1">Dhuʻl-Qiʻdah 22</p>
+              <p className="font-serif text-lg text-textDark font-bold">Sunday, May 10</p>
+              
+              <div className="flex flex-col items-center gap-1 mt-2 mb-4">
+                <p className="font-serif text-sm text-textDark/80">Btw 5:00 PM - 10:00 PM</p>
+              </div>
+
+              <CountdownDisplay targetDateIso="2026-05-10T17:00:00" revealed={revealed} />
+              
+              <div className="mt-4 p-2 border border-gold/10 rounded-lg bg-gold/5">
+                <p className="font-sans text-[9px] text-sage font-bold tracking-[0.15em] uppercase italic">Lucky Draw: 10:00 PM</p>
+              </div>
+            </div>
+
+            <div className="pt-6 border-t border-gold/10">
+              <h3 className="font-sans text-[9px] uppercase tracking-widest text-[#899E8F] mb-1 font-bold">Venue</h3>
+              <p className="font-serif text-base text-textDark font-bold leading-tight">{commonVenue}</p>
+              <p className="font-serif text-[10px] text-textDark/60">Mathottam, Kozhikode (Calicut)</p>
+            </div>
+
+            <motion.div className="pt-6">
+              <a 
+                href={commonLocation}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-3 px-8 py-3 rounded-full border-2 border-gold/40 bg-white shadow-lg text-gold font-serif text-[13px] tracking-widest hover:bg-gold hover:text-white transition-all duration-500 uppercase italic font-bold"
+              >
+                <Map size={16} />
+                View Location
+              </a>
+            </motion.div>
+          </div>
+        </div>
+      </motion.section>
     </div>
   );
 };

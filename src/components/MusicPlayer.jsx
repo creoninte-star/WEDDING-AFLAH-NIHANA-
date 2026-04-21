@@ -31,13 +31,27 @@ const MusicPlayer = ({ isOpened }) => {
     }
   }, [isOpened]);
 
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (document.hidden && audioRef.current && isPlaying) {
+        audioRef.current.pause();
+        setIsPlaying(false);
+      }
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
+  }, [isPlaying]);
+
   const togglePlay = (e) => {
     e.stopPropagation();
     if (audioRef.current) {
       if (isPlaying) {
         audioRef.current.pause();
       } else {
-        audioRef.current.play();
+        audioRef.current.play().catch(console.error);
       }
       setIsPlaying(!isPlaying);
     }
@@ -53,7 +67,7 @@ const MusicPlayer = ({ isOpened }) => {
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
           onClick={togglePlay}
-          className="fixed bottom-6 right-6 z-[100] w-12 h-12 rounded-full bg-gold/90 text-paper flex items-center justify-center shadow-xl border border-paper/30 backdrop-blur-sm"
+          className="fixed bottom-6 right-6 z-[100] w-12 h-12 rounded-full bg-gold text-paper flex items-center justify-center shadow-xl border border-paper/30 backdrop-blur-sm"
           style={{ 
             boxShadow: '0 4px 15px rgba(182, 130, 34, 0.4)',
             zIndex: 1000 

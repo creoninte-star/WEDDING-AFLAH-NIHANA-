@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import HeroEnvelope from './components/HeroEnvelope';
 import DoubleWeddingArchitecture from './components/DoubleWeddingArchitecture';
 import EventSections from './components/EventSections';
@@ -11,10 +12,37 @@ import confetti from 'canvas-confetti';
 
 
 
-function App() {
-  const [isOpened, setIsOpened] = useState(false);
+class ErrorBoundary extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false, error: null };
+  }
+  static getDerivedStateFromError(error) {
+    return { hasError: true, error };
+  }
+  componentDidCatch(error, errorInfo) {
+    console.error("Uncaught error:", error, errorInfo);
+  }
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div style={{ padding: '20px', color: '#A83B40', textAlign: 'center', background: '#FAF6F0', height: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+          <h1 style={{ fontFamily: 'serif' }}>Something went wrong.</h1>
+          <p style={{ fontFamily: 'sans-serif', fontSize: '12px' }}>{this.state.error?.message}</p>
+          <button onClick={() => window.location.reload()} style={{ padding: '10px 20px', background: '#B68222', color: 'white', border: 'none', borderRadius: '5px', marginTop: '20px' }}>Reload Page</button>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
 
-  React.useEffect(() => {
+function App() {
+  console.log("Wedding App Initializing...");
+  const [isOpened, setIsOpened] = useState(false);
+  const [allRevealed, setAllRevealed] = useState(false);
+
+  useEffect(() => {
     if (isOpened) {
       // WOW Party Popper Effect - Multi-stage
       const end = Date.now() + (1.5 * 1000);
@@ -65,8 +93,8 @@ function App() {
         <div className={`relative z-10 min-h-screen transition-opacity duration-1000 ${isOpened ? 'opacity-100' : 'opacity-0'}`}>
           <DoubleWeddingArchitecture />
           
-          <EventSections />
-          <VenueMaps />
+          <EventSections onAllRevealed={() => setAllRevealed(true)} />
+          
           <FooterRSVP />
           <ClosingMessage />
           
@@ -77,4 +105,10 @@ function App() {
   );
 }
 
-export default App;
+export default function AppWithErrorBoundary() {
+  return (
+    <ErrorBoundary>
+      <App />
+    </ErrorBoundary>
+  );
+}

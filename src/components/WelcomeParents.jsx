@@ -23,9 +23,7 @@ const WelcomeParents = () => {
         
         <div className="flex flex-col items-center gap-6 mb-12">
           <div className="text-center">
-            <h2 className="font-serif text-4xl mb-1 mt-2">Rafeel & Jumana</h2>
-            <div className="w-12 h-px bg-gold/50 mx-auto my-3"></div>
-            <h2 className="font-serif text-4xl mb-1 mt-3">Rizwan & Nidha</h2>
+            <h2 className="font-serif text-4xl mb-1 mt-2">Aflah & Nihana</h2>
           </div>
         </div>
       </div>
@@ -37,20 +35,13 @@ const WelcomeParents = () => {
         
         <div className="space-y-8 mt-4">
           <div>
-            <h3 className="font-sans text-xs uppercase tracking-widest text-gold mb-1">The Grooms' Parents</h3>
-            <p className="font-serif text-xl">Rafeek & Sareena</p>
+            <h3 className="font-sans text-xs uppercase tracking-widest text-gold mb-1">Aflah's Parents</h3>
+            <p className="font-serif text-xl">Mr. Abdul Azeez Haji & Mrs. Sakeena</p>
           </div>
           
           <div>
-            <h3 className="font-sans text-xs uppercase tracking-widest text-gold mb-1">Nidha's Parents</h3>
-            <p className="font-serif text-xl">Sulaiman & Minsiya</p>
-          </div>
-
-          <div>
-            <h3 className="font-sans text-xs uppercase tracking-widest text-gold mb-1">Jumana's Parents</h3>
-            <p className="font-serif text-xl">
-              <span className="italic text-textDark/70 text-lg">Late</span> Rasak & Najma
-            </p>
+            <h3 className="font-sans text-xs uppercase tracking-widest text-gold mb-1">Nihana's Parents</h3>
+            <p className="font-serif text-xl">Mr. Nisar & Mrs. Sajna</p>
           </div>
         </div>
       </div>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const Sparkles = () => {
   return (
@@ -79,55 +79,118 @@ const HeroEnvelope = ({ onOpen }) => {
         </p>
       </motion.div>
 
-      {/* Floating Envelope */}
-      <div className="relative w-[90%] max-w-[340px] aspect-[4/3] bg-paper rounded-sm flex items-center justify-center cursor-pointer paper-bg shadow-[0_20px_50px_rgba(0,0,0,0.15),0_10px_20px_rgba(0,0,0,0.1)] transition-transform duration-500 hover:scale-[1.02] z-10" onClick={handleOpen}>
+      {/* Floating Envelope & Characters Container */}
+      <div className="relative w-full max-w-[340px] aspect-[4/3] flex items-center justify-center z-10">
         
-        {/* Envelope back folds */}
-        <div className="absolute inset-0">
-           <svg className="w-full h-full text-[#EADDCE]" viewBox="0 0 100 100" preserveAspectRatio="none">
-             {/* Base paper texture is provided by paper-bg utility class on parent, but we can darken folds slightly */}
-             <polygon fill="currentColor" points="0,0 50,50 100,0 100,100 0,100" />
-           </svg>
-        </div>
-        
-        {/* Flap */}
-        <motion.div 
-          className="absolute top-0 left-0 w-full h-[60%] origin-top z-20"
-          initial={{ rotateX: 0 }}
-          animate={{ rotateX: isOpen ? 180 : 0 }}
-          transition={{ duration: 0.8, ease: "easeInOut" }}
-        >
-          {/* Flap SVG with noise texture applied via mix-blend or SVG pattern (using utility classes) */}
-          <div className="w-full h-full text-envelope relative paper-bg drop-shadow-[0_4px_6px_rgba(0,0,0,0.15)] filter" style={{ clipPath: 'polygon(0 0, 100% 0, 50% 100%)' }}>
-            <div className="absolute inset-0 bg-envelope paper-bg"></div>
-            {/* Delicate 1px gold foil stroke simulated by border/inset gradient inside clipPath */}
-            <svg className="absolute inset-0 w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
-               <polyline stroke="var(--tw-colors-gold)" strokeWidth="1" fill="none" points="0.5,0.5 50,99 99.5,0.5" />
-            </svg>
+        <AnimatePresence>
+          {!isOpen && (
+            <>
+              {/* Jerry */}
+              <motion.img 
+                src="/jerry.png"
+                alt="Jerry"
+                className="absolute -bottom-8 left-6 w-20 sm:w-28 z-50 pointer-events-none drop-shadow-xl"
+                initial={{ opacity: 0, scaleX: -0.8, scaleY: 0.8, rotate: -10 }}
+                animate={{ 
+                  opacity: 1, 
+                  scaleX: -1, 
+                  scaleY: 1,
+                  rotate: -15,
+                  y: [0, -15, 0]
+                }}
+                exit={{ opacity: 0, scale: 0.5, transition: { duration: 0.2 } }}
+                transition={{ 
+                  y: { repeat: Infinity, duration: 1.5, ease: "easeInOut", delay: 0.4 },
+                  opacity: { duration: 0.4 }
+                }}
+              />
+
+              {/* Tom */}
+              <motion.img 
+                src="/tom.png"
+                alt="Tom"
+                className="absolute top-[55%] -right-4 w-28 sm:w-40 z-50 pointer-events-none drop-shadow-xl"
+                initial={{ opacity: 0, scale: 0.8, rotate: 10 }}
+                animate={{ 
+                  opacity: 1, 
+                  scale: 1, 
+                  rotate: -25,
+                  y: [0, -15, 0]
+                }}
+                exit={{ opacity: 0, scale: 0.5, transition: { duration: 0.2 } }}
+                transition={{ 
+                  y: { repeat: Infinity, duration: 1.5, ease: "easeInOut", delay: 0.2 },
+                  opacity: { duration: 0.4 }
+                }}
+              />
+
+              {/* Mickey Mouse */}
+              <motion.img 
+                src="/mickey mouse.png"
+                alt="Mickey"
+                className="absolute -bottom-14 left-1/2 -ml-6 w-28 sm:w-40 z-50 pointer-events-none drop-shadow-xl"
+                initial={{ opacity: 0, scale: 0.8, rotate: 5 }}
+                animate={{ 
+                  opacity: 1, 
+                  scale: 1, 
+                  rotate: 0,
+                  y: [0, -20, 0]
+                }}
+                exit={{ opacity: 0, scale: 0.5, transition: { duration: 0.2 } }}
+                transition={{ 
+                   y: { repeat: Infinity, duration: 1.5, ease: "easeInOut", delay: 0 },
+                   opacity: { duration: 0.4 }
+                }}
+              />
+            </>
+          )}
+        </AnimatePresence>
+
+        <div className="relative w-full h-full bg-paper rounded-sm flex items-center justify-center cursor-pointer paper-bg shadow-[0_20px_50px_rgba(0,0,0,0.15),0_10px_20px_rgba(0,0,0,0.1)] transition-transform duration-500 hover:scale-[1.02]" onClick={handleOpen}>
+          
+          {/* Envelope back folds */}
+          <div className="absolute inset-0">
+             <svg className="w-full h-full text-[#EADDCE]" viewBox="0 0 100 100" preserveAspectRatio="none">
+               <polygon fill="currentColor" points="0,0 50,50 100,0 100,100 0,100" />
+             </svg>
           </div>
           
-          {/* Breathing Wax Seal */}
+          {/* Flap */}
           <motion.div 
-            className="absolute left-1/2 -bottom-6 w-16 h-16 -ml-8 rounded-full bg-wax-seal shadow-md flex justify-center items-center cursor-pointer border-2 border-gold z-30"
-            animate={
-              isOpen ? { scale: 1.2, opacity: 0 } : { scale: [1, 1.05, 1], opacity: 1 }
-            }
-            transition={
-              isOpen ? { duration: 0.4 } : { repeat: Infinity, duration: 2.5, ease: "easeInOut" }
-            }
+            className="absolute top-0 left-0 w-full h-[60%] origin-top z-20"
+            initial={{ rotateX: 0 }}
+            animate={{ rotateX: isOpen ? 180 : 0 }}
+            transition={{ duration: 0.8, ease: "easeInOut" }}
           >
-            {/* The wax seal inner detail */}
-            <div className="w-14 h-14 rounded-full border border-gold/70 flex flex-col justify-center items-center text-gold bg-[#EADDCE] shadow-inner">
-              <span className="font-serif text-[10px] font-bold tracking-wider leading-none">R&J</span>
-              <div className="w-6 border-t border-gold/70 my-[2px]"></div>
-              <span className="font-serif text-[10px] font-bold tracking-wider leading-none">R&N</span>
+            <div className="w-full h-full text-envelope relative paper-bg drop-shadow-[0_4px_6px_rgba(0,0,0,0.15)] filter" style={{ clipPath: 'polygon(0 0, 100% 0, 50% 100%)' }}>
+              <div className="absolute inset-0 bg-envelope paper-bg"></div>
+              <svg className="absolute inset-0 w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+                 <polyline stroke="var(--tw-colors-gold)" strokeWidth="1" fill="none" points="0.5,0.5 50,99 99.5,0.5" />
+              </svg>
             </div>
+            
+            {/* Breathing Wax Seal */}
+            <motion.div 
+              className="absolute left-1/2 -bottom-6 w-16 h-16 -ml-8 rounded-full bg-wax-seal shadow-md flex justify-center items-center cursor-pointer border-2 border-gold z-30"
+              animate={
+                isOpen ? { scale: 1.2, opacity: 0 } : { scale: [1, 1.05, 1], opacity: 1 }
+              }
+              transition={
+                isOpen ? { duration: 0.4 } : { repeat: Infinity, duration: 2.5, ease: "easeInOut" }
+              }
+            >
+              <div className="w-14 h-14 rounded-full border border-gold/70 flex flex-col justify-center items-center text-gold bg-[#EADDCE] shadow-inner">
+                <span className="font-serif text-[10px] font-bold tracking-wider leading-none">A&N</span>
+                <div className="w-6 border-t border-gold/70 my-[2px]"></div>
+                <span className="font-serif text-[10px] font-bold tracking-wider leading-none">A&N</span>
+              </div>
+            </motion.div>
           </motion.div>
-        </motion.div>
 
-        {/* Content peering through underneath */}
-        <div className="absolute inset-x-4 top-4 bottom-2 bg-white flex flex-col items-center pt-8 opacity-60 pointer-events-none paper-bg border border-sage/20 z-0 text-center px-4">
-           <h2 className="font-serif text-xl text-textDark mb-2">You are invited</h2>
+          {/* Content peering through underneath */}
+          <div className="absolute inset-x-4 top-4 bottom-2 bg-white flex flex-col items-center pt-8 opacity-60 pointer-events-none paper-bg border border-sage/20 z-0 text-center px-4">
+             <h2 className="font-serif text-xl text-textDark mb-2">You are invited</h2>
+          </div>
         </div>
       </div>
 

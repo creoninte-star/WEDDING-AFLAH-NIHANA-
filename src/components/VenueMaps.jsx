@@ -27,18 +27,18 @@ const VenueMaps = () => {
         <div className="w-12 h-px bg-gold/50 mx-auto mb-6"></div>
         
         <div className="mb-4">
-          <p className="font-sans text-[10px] uppercase tracking-widest text-sage mb-1">Marriage Function</p>
-          <p className="font-serif text-lg text-textDark/90">Vajra Auditorium</p>
-          <p className="font-serif text-sm text-textDark/70 mb-2">Mooriyad Road, Koothuparamba</p>
+          <p className="font-sans text-[10px] uppercase tracking-widest text-sage mb-1">Location</p>
+          <p className="font-serif text-lg text-textDark/90">Alankar Auditorium</p>
+          <p className="font-serif text-sm text-textDark/70 mb-2">Mathottam, Kozhikode (Calicut)</p>
         </div>
 
         {/* Live Embedded Map */}
         <div className="relative w-full aspect-square sm:aspect-video rounded-xl overflow-hidden border-2 border-gold/20 shadow-inner group">
-          {/* A slight sepia overlay to keep the map matched with the cream/ivory vintage aesthetic, but allows clicking */}
+          {/* A slight sepia overlay */}
           <div className="absolute inset-0 pointer-events-none mix-blend-color z-10 bg-[#e8dcc4] opacity-40"></div>
           
           <iframe 
-            src="https://maps.google.com/maps?q=Vajra%20Auditorium,%20Koothuparamba,%20Kerala&t=&z=15&ie=UTF8&iwloc=&output=embed" 
+            src="https://maps.google.com/maps?q=Alankar%20Auditorium,%20Mathottam,%20Kozhikode,%20Kerala&t=&z=15&ie=UTF8&iwloc=&output=embed" 
             width="100%" 
             height="100%" 
             style={{ border: 0 }} 
@@ -50,7 +50,7 @@ const VenueMaps = () => {
         </div>
         
         <a 
-          href="https://maps.google.com/maps?q=Vajra%20Auditorium,%20Koothuparamba,%20Kerala"
+          href="https://maps.google.com/maps?q=Alankar%20Auditorium,%20Mathottam,%20Kozhikode,%20Kerala"
           target="_blank"
           rel="noopener noreferrer"
           className="relative inline-block mt-6 px-8 py-3 bg-envelope border border-gold/50 text-gold font-sans text-[10px] font-bold uppercase tracking-widest rounded-full shadow-md hover:bg-gold hover:text-white transition-all duration-300 z-20"
