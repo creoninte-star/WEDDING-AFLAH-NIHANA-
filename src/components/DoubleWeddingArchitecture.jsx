@@ -47,26 +47,12 @@ const OrnateSingleCard = ({ pathDraw }) => (
 
     <div className="z-20 w-full flex flex-col items-center px-4 text-center mt-4">
       
-      {/* Premium Photo Placeholder / Slideshow */}
-      <motion.div 
-        className="w-full aspect-[4/5] rounded-t-[120px] rounded-b-2xl overflow-hidden shadow-2xl border-4 border-white mb-8 relative"
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1.2 }}
-      >
-        <PhotoSlideshow images={couplePhotos} />
-        {/* Ornate Label Overlay */}
-        <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 bg-white px-6 py-2 rounded-t-xl border-t border-x border-gold/30 z-30">
-           <p className="font-serif text-[10px] text-gold uppercase tracking-[0.3em] font-bold">The Couple</p>
-        </div>
-      </motion.div>
-
       {/* Original Bismillah Design with English Translation */}
       <motion.div 
         className="mb-8"
         initial={{ opacity: 0, y: 10 }}
         whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1.5, delay: 0.3 }}
+        transition={{ duration: 1.5 }}
       >
         <span className="font-serif text-4xl text-gold italic drop-shadow-sm block mb-2">﷽</span>
         <p className="font-serif text-[18px] sm:text-[20px] font-bold tracking-[0.05em] text-[#9A6D1C] italic leading-tight px-4">
@@ -109,6 +95,20 @@ const OrnateSingleCard = ({ pathDraw }) => (
          </div>
       </div>
 
+      {/* Premium Photo Placeholder / Slideshow - MOVED UNDER PARENTS */}
+      <motion.div 
+        className="w-full aspect-[4/5] rounded-[40px] overflow-hidden shadow-2xl border-4 border-white mb-8 relative"
+        initial={{ opacity: 0, scale: 0.9 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 1.2 }}
+      >
+        <PhotoSlideshow images={couplePhotos} />
+        {/* Ornate Label Overlay */}
+        <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 bg-white px-6 py-2 rounded-t-xl border-t border-x border-gold/30 z-30">
+           <p className="font-serif text-[10px] text-gold uppercase tracking-[0.3em] font-bold">The Couple</p>
+        </div>
+      </motion.div>
+
       <div className="w-full h-px bg-gold/10 mb-8 max-w-[200px]"></div>
 
       <motion.p 
@@ -138,7 +138,7 @@ const DoubleWeddingArchitecture = () => {
         <MandalaBackdrop scrollYProgress={scrollYProgress} />
   
         <motion.div
-          className="relative w-[92%] max-w-sm min-h-[800px] z-20 pointer-events-auto"
+          className="relative w-[92%] max-w-sm min-h-[900px] z-20 pointer-events-auto"
           initial={{ opacity: 0, scale: 0.95, y: 50 }}
           whileInView={{ opacity: 1, scale: 1, y: 0 }}
           viewport={{ once: false, amount: 0.2 }}
