@@ -145,7 +145,7 @@ const FooterRSVP = () => {
                     <h3 className="font-serif text-2xl text-gold mb-2 drop-shadow-sm">You’re In! 🎉</h3>
                     <div className="w-8 h-px bg-gold/30 mx-auto mb-4"></div>
                     <p className="font-sans text-[11px] text-sage leading-relaxed px-2 font-medium">
-                      Thank you for confirming. You are now officially entered to win our <span className="text-gold font-bold">₹10,000 Cash Prize</span>. The winner will be announced live on <span className="text-textDark font-bold underline decoration-gold/30">May 10th at 10:00 PM</span> during the event. Good luck!
+                      Thank you for confirming. You are now officially entered to win our <span className="text-gold font-bold">Lucky Draw Prize</span>. The winner will be announced live on <span className="text-textDark font-bold underline decoration-gold/30">May 10th at 10:00 PM</span> during the event. Good luck!
                     </p>
                     <div className="mt-6 font-serif text-[10px] text-gold/60 tracking-[0.3em] uppercase">Lucky Ticket #786</div>
                  </div>
@@ -232,7 +232,7 @@ const FooterRSVP = () => {
                 disabled={isSubmitting}
                 className={`w-full mt-6 py-4 bg-gradient-to-r from-[#B8860B] via-[#FFD700] to-[#DAA520] text-textDark font-sans text-[11px] uppercase tracking-[0.2em] rounded-lg shadow-xl outline outline-1 outline-gold/50 transition-all font-bold relative overflow-hidden group ${isSubmitting ? 'opacity-70' : 'hover:scale-[1.02]'}`}
               >
-                <span className="relative z-10">{isSubmitting ? 'ENTRY PROCESSING...' : 'ENTER ₹10K LUCKY DRAW'}</span>
+                <span className="relative z-10">{isSubmitting ? 'ENTRY PROCESSING...' : 'ENTER LUCKY DRAW'}</span>
                 <motion.div 
                   className="absolute inset-0 bg-white/20 origin-left"
                   initial={{ scaleX: 0 }}
