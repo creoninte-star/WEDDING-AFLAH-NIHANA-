@@ -33,35 +33,40 @@ const FooterRSVP = () => {
       e.preventDefault();
       setIsSubmitting(true);
       
-      // New Script URL provided by user
-      const scriptUrl = "https://script.google.com/macros/s/AKfycbx6GJE_xFjewjvqQWvNZLy0MK9Oy7nWTXWD6Zsrk4O3-yZnVQ1sXSFsPc52tEdEZNDJ/exec";
+      // Target URL for Google Apps Script
+      const scriptUrl = "https://script.google.com/macros/s/AKfycbz8oRgQBi-37jCL4p3rvJuHMk4jU-Mw77-LzpY9P5qPOFQ0vgbxnofe5vxPBdC409uI/exec";
   
       try {
-        const body = new URLSearchParams();
-        body.append('name', formData.name);
-        body.append('email', formData.email || 'N/A');
-        body.append('contactInfo', formData.contactInfo);
-        body.append('guestCount', formData.guestCount);
-        body.append('response', 'yes');
-        body.append('timestamp', new Date().toLocaleString());
+        // Detect contact type (Mobile vs Instagram)
+        const contactVal = formData.contactInfo.trim();
+        const detectedType = contactVal.startsWith('@') ? 'Instagram' : 'Mobile';
+
+        // Exact Keys required for Google Sheet columns
+        const payload = {
+          fullName: formData.name,
+          emailAddress: formData.email || 'N/A',
+          contactId: contactVal,
+          contactType: detectedType,
+          guestNumbers: formData.guestCount
+        };
 
         await fetch(scriptUrl, {
           method: 'POST',
           mode: 'no-cors', 
           headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
+            'Content-Type': 'application/json',
           },
-          body: body.toString()
+          body: JSON.stringify(payload)
         });
         
-        // Save to localStorage
+        // Save state locally to prevent re-submission
         localStorage.setItem('wedding_rsvp_submitted', 'true');
         localStorage.setItem('wedding_rsvp_response', 'yes');
         setResponse('yes');
         setSubmitted(true);
       } catch (error) {
         console.error("Submission error:", error);
-        // Fallback: still lock the card to provide a sense of completion
+        // Fallback: treat as success to keep UX smooth
         localStorage.setItem('wedding_rsvp_submitted', 'true');
         localStorage.setItem('wedding_rsvp_response', 'yes');
         setResponse('yes');
