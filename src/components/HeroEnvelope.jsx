@@ -38,54 +38,6 @@ const AbstractFloral = ({ className }) => (
   </svg>
 );
 
-const SealGuidePigeon = () => (
-  <motion.div 
-    className="absolute z-[60] pointer-events-none"
-    style={{ left: '50%', top: '50%' }}
-    initial={{ x: 60, y: -45, opacity: 0 }}
-    animate={{ opacity: 1 }}
-  >
-    <div className="relative -translate-x-1/2 -translate-y-1/2 flex flex-col items-center">
-      {/* Smaller, Simple Pigeon Silhouette */}
-      <div className="relative w-14 h-12">
-        <motion.svg 
-          viewBox="0 0 100 100" 
-          className="w-full h-full text-white/90 drop-shadow-md"
-        >
-          {/* Wings - Only Flapping Animation */}
-          <motion.path 
-            d="M50,55 C40,40 25,25 15,35 C5,45 15,65 50,65"
-            fill="currentColor"
-            animate={{ 
-              d: [
-                "M50,55 C40,40 25,25 15,35 C5,45 15,65 50,65", 
-                "M50,55 C40,65 25,75 15,65 C5,55 15,35 50,55"
-              ]
-            }}
-            transition={{ repeat: Infinity, duration: 0.6, ease: "easeInOut" }}
-          />
-          {/* Body */}
-          <path d="M45,60 C55,48 75,48 85,58 C95,68 85,85 65,80 C55,75 45,70 45,60" fill="currentColor" />
-          {/* Head & Beak */}
-          <circle cx="85" cy="52" r="5" fill="currentColor" />
-          <path d="M90,52 L96,55 L90,58 Z" fill="#D8C2A0" />
-        </motion.svg>
-      </div>
-
-      {/* Tap Here Label */}
-      <motion.div 
-        className="mt-1 bg-white/90 px-3 py-1 rounded-full border border-primary-pink/30 shadow-md"
-        animate={{ y: [0, -3, 0] }}
-        transition={{ repeat: Infinity, duration: 2 }}
-      >
-        <div className="flex flex-col items-center">
-          <p className="font-sans text-[8px] font-bold uppercase tracking-[0.2em] text-primary-pink whitespace-nowrap">Tap Here</p>
-          <div className="w-px h-1.5 bg-primary-pink/40 mt-0.5"></div>
-        </div>
-      </motion.div>
-    </div>
-  </motion.div>
-);
 
 const HeroEnvelope = ({ onOpen }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -131,10 +83,6 @@ const HeroEnvelope = ({ onOpen }) => {
       {/* Floating Envelope Container */}
       <div className="relative w-full max-w-[340px] aspect-[4/3] flex items-center justify-center z-10 transition-all duration-300">
         
-        {/* Animated Pigeon Guide */}
-        <AnimatePresence>
-          {!isOpen && <SealGuidePigeon />}
-        </AnimatePresence>
 
         <div className="relative w-full h-full bg-paper rounded-sm flex items-center justify-center cursor-pointer paper-bg shadow-[0_20px_50px_rgba(0,0,0,0.1),0_10px_20px_rgba(0,0,0,0.05)] transition-transform duration-500 hover:scale-[1.02]" onClick={handleOpen}>
           
