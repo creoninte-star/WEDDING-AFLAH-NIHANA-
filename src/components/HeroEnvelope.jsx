@@ -42,13 +42,13 @@ const FlyingPigeon = () => (
   <motion.div 
     className="absolute z-[60] pointer-events-none"
     style={{ left: '50%', top: '50%' }}
+    initial={{ x: 0, y: -80, opacity: 0 }}
     animate={{ 
-      x: [60, 80, 60], 
-      y: [0, -20, 0],
-      rotate: [-5, 5, -5]
+      opacity: 1,
+      y: [-75, -85, -75] // Gentle floating bounce
     }}
     transition={{ 
-      duration: 4, 
+      duration: 3, 
       repeat: Infinity, 
       ease: "easeInOut" 
     }}
@@ -79,17 +79,19 @@ const FlyingPigeon = () => (
         </motion.svg>
       </div>
 
-      {/* Pointing Label */}
-      <motion.div 
-        className="mt-2 bg-white/95 px-3 py-1.5 rounded-full border border-primary-pink/40 shadow-lg"
-        initial={{ opacity: 0, scale: 0.8 }}
-        animate={{ opacity: 1, scale: 1 }}
-      >
-        <div className="flex flex-col items-center">
-          <p className="font-sans text-[9px] font-bold uppercase tracking-[0.2em] text-primary-pink whitespace-nowrap">Click Here</p>
-          <div className="w-0.5 h-2 bg-primary-pink/50 mt-1"></div>
-        </div>
-      </motion.div>
+      {/* Repositioned Guide with Arrow */}
+      <div className="mt-1 flex flex-col items-center">
+        <p className="font-sans text-[8px] font-bold uppercase tracking-[0.2em] text-primary-pink drop-shadow-sm mb-1 bg-white/40 px-2 rounded-full">Click Here</p>
+        <motion.div 
+          animate={{ y: [0, 4, 0] }}
+          transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
+          className="text-primary-pink drop-shadow-lg"
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M12 5v14M19 12l-7 7-7-7"/>
+          </svg>
+        </motion.div>
+      </div>
     </div>
   </motion.div>
 );
