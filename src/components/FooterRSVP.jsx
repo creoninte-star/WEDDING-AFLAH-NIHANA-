@@ -9,7 +9,7 @@ const FooterRSVP = () => {
       name: '',
       email: '',
       contactInfo: '',
-      guestCount: '1'
+      guestCount: '' // Initialized to empty string as requested
     });
   
     const handleChange = (e) => {
@@ -28,24 +28,32 @@ const FooterRSVP = () => {
       const scriptUrl = "https://script.google.com/macros/s/AKfycbw7tCSAkRcu0GF8pl2N90qWGH7PRbSrydTys2nohJXvsM3hHcIMB7rjyUOqrA8Cbsmu/exec";
   
       try {
-        const payload = {
-          ...formData,
-          response: 'yes',
-          timestamp: new Date().toISOString()
-        };
-  
+        // Using URLSearchParams or FormData for better compatibility with Apps Script
+        const body = new URLSearchParams();
+        body.append('name', formData.name);
+        body.append('email', formData.email || 'N/A');
+        body.append('contactInfo', formData.contactInfo);
+        body.append('guestCount', formData.guestCount);
+        body.append('response', 'yes');
+        
         await fetch(scriptUrl, {
           method: 'POST',
-          mode: 'no-cors',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
+          mode: 'no-cors', // Essential for Google Apps Script cross-origin
+          cache: 'no-cache',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          body: body.toString()
         });
         
+        // Since no-cors doesn't let us see the response, we assume success after the fetch completes
         setSubmitted(true);
+        setResponse('yes');
       } catch (error) {
         console.error("Submission error:", error);
-        // Fallback to success anyway since no-cors doesn't return response
+        // Still move to success state to not block the user UX
         setSubmitted(true);
+        setResponse('yes');
       } finally {
         setIsSubmitting(false);
       }
@@ -86,7 +94,7 @@ const FooterRSVP = () => {
     }
 
     return (
-      <motion.section className="py-20 px-6 relative z-10 w-full">
+      <motion.section className="py-20 px-6 relative z-10 w-full font-serif">
         <div className="max-w-sm mx-auto bg-paper border-2 border-primary-pink/20 rounded-[40px] p-8 shadow-2xl relative overflow-hidden">
           
           <div className="text-center mb-10">
@@ -97,7 +105,7 @@ const FooterRSVP = () => {
           {!response ? (
             <div className="space-y-4">
               <button 
-                onClick={() => setResponse('yes')}
+                onClick={() => setResponse('yes_init')}
                 className="w-full flex items-center justify-between p-4 rounded-2xl border border-primary-pink/20 bg-white shadow-sm hover:shadow-md hover:bg-soft-pink/10 transition-all font-serif text-lg text-dark-accent group"
               >
                 <span>Yes, In Sha Allah! 😍</span>
@@ -120,19 +128,19 @@ const FooterRSVP = () => {
                <div className="space-y-4">
                   <input 
                     name="name" required placeholder="Full Name" value={formData.name} onChange={handleChange}
-                    className="w-full bg-transparent border-b border-primary-pink/30 py-3 font-sans text-sm focus:outline-none focus:border-primary-pink placeholder:text-primary-pink/40 text-dark-accent"
+                    className="w-full bg-transparent border-b border-primary-pink/30 py-3 font-sans text-sm focus:outline-none focus:border-primary-pink placeholder:text-primary-pink/40 text-dark-accent text-center"
                   />
                   <input 
                     name="email" type="email" placeholder="Email Address (Optional)" value={formData.email} onChange={handleChange}
-                    className="w-full bg-transparent border-b border-primary-pink/30 py-3 font-sans text-sm focus:outline-none focus:border-primary-pink placeholder:text-primary-pink/40 text-dark-accent"
+                    className="w-full bg-transparent border-b border-primary-pink/30 py-3 font-sans text-sm focus:outline-none focus:border-primary-pink placeholder:text-primary-pink/40 text-dark-accent text-center"
                   />
                   <input 
-                    name="contactInfo" placeholder="Mobile / Insta ID" value={formData.contactInfo} onChange={handleChange}
-                    className="w-full bg-transparent border-b border-primary-pink/30 py-3 font-sans text-sm focus:outline-none focus:border-primary-pink placeholder:text-primary-pink/40 text-dark-accent"
+                    name="contactInfo" required placeholder="Mobile / Insta ID" value={formData.contactInfo} onChange={handleChange}
+                    className="w-full bg-transparent border-b border-primary-pink/30 py-3 font-sans text-sm focus:outline-none focus:border-primary-pink placeholder:text-primary-pink/40 text-dark-accent text-center"
                   />
                   <input 
-                    name="guestCount" type="number" required min="1" value={formData.guestCount} onChange={handleChange}
-                    className="w-full bg-transparent border-b border-primary-pink/30 py-3 font-sans text-sm focus:outline-none focus:border-primary-pink placeholder:text-primary-pink/40 text-dark-accent"
+                    name="guestCount" type="number" required placeholder="Number of Guests" value={formData.guestCount} onChange={handleChange}
+                    className="w-full bg-transparent border-b border-primary-pink/30 py-3 font-sans text-sm focus:outline-none focus:border-primary-pink placeholder:text-primary-pink/40 text-dark-accent text-center"
                   />
                </div>
                
