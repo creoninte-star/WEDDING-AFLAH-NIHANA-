@@ -38,6 +38,61 @@ const AbstractFloral = ({ className }) => (
   </svg>
 );
 
+const FlyingPigeon = () => (
+  <motion.div 
+    className="absolute z-[60] pointer-events-none"
+    style={{ left: '50%', top: '50%' }}
+    animate={{ 
+      x: [60, 80, 60], 
+      y: [0, -20, 0],
+      rotate: [-5, 5, -5]
+    }}
+    transition={{ 
+      duration: 4, 
+      repeat: Infinity, 
+      ease: "easeInOut" 
+    }}
+  >
+    <div className="relative -translate-x-1/2 -translate-y-1/2 flex flex-col items-center">
+      {/* 2D Pigeon SVG with wings animation */}
+      <div className="relative w-16 h-12">
+        <motion.svg 
+          viewBox="0 0 100 100" 
+          className="w-full h-full text-white/90 drop-shadow-[2px_4px_8px_rgba(0,0,0,0.2)]"
+        >
+          {/* Wings */}
+          <motion.path 
+            d="M50,40 Q20,10 5,45 Q20,35 50,45" 
+            fill="currentColor"
+            animate={{ d: ["M50,40 Q25,5 10,45 Q25,35 50,45", "M50,40 Q20,60 5,45 Q20,35 50,45"] }}
+            transition={{ repeat: Infinity, duration: 0.5, ease: "easeInOut" }}
+          />
+          <motion.path 
+            d="M50,40 Q80,10 95,45 Q80,35 50,45" 
+            fill="currentColor"
+            animate={{ d: ["M50,40 Q75,5 90,45 Q75,35 50,45", "M50,40 Q80,60 95,45 Q80,35 50,45"] }}
+            transition={{ repeat: Infinity, duration: 0.5, ease: "easeInOut", delay: 0.1 }}
+          />
+          {/* Body & Head */}
+          <path d="M40,40 Q50,30 65,40 Q80,50 60,70 Q45,80 35,65 Q25,50 40,40" fill="currentColor" />
+          <circle cx="68" cy="42" r="2" fill="#6F3346" /> {/* Eye */}
+        </motion.svg>
+      </div>
+
+      {/* Pointing Label */}
+      <motion.div 
+        className="mt-2 bg-white/95 px-3 py-1.5 rounded-full border border-primary-pink/40 shadow-lg"
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: 1, scale: 1 }}
+      >
+        <div className="flex flex-col items-center">
+          <p className="font-sans text-[9px] font-bold uppercase tracking-[0.2em] text-primary-pink whitespace-nowrap">Click Here</p>
+          <div className="w-0.5 h-2 bg-primary-pink/50 mt-1"></div>
+        </div>
+      </motion.div>
+    </div>
+  </motion.div>
+);
 
 const HeroEnvelope = ({ onOpen }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -83,6 +138,10 @@ const HeroEnvelope = ({ onOpen }) => {
       {/* Floating Envelope Container */}
       <div className="relative w-full max-w-[340px] aspect-[4/3] flex items-center justify-center z-10 transition-all duration-300">
         
+        {/* Animated Flying Pigeon */}
+        <AnimatePresence>
+          {!isOpen && <FlyingPigeon />}
+        </AnimatePresence>
 
         <div className="relative w-full h-full bg-paper rounded-sm flex items-center justify-center cursor-pointer paper-bg shadow-[0_20px_50px_rgba(0,0,0,0.1),0_10px_20px_rgba(0,0,0,0.05)] transition-transform duration-500 hover:scale-[1.02]" onClick={handleOpen}>
           
