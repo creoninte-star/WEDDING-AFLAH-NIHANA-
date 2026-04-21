@@ -1,10 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const FooterRSVP = () => {
-    const [response, setResponse] = useState(null);
+    // Persist submission state to localStorage to restrict duplicate entries per device
+    const [submitted, setSubmitted] = useState(() => {
+        return localStorage.getItem('wedding_rsvp_submitted') === 'true';
+    });
+    const [response, setResponse] = useState(() => {
+        return localStorage.getItem('wedding_rsvp_response') || null;
+    });
+
     const [isSubmitting, setIsSubmitting] = useState(false);
-    const [submitted, setSubmitted] = useState(false);
     const [formData, setFormData] = useState({
       name: '',
       email: '',
@@ -17,8 +23,10 @@ const FooterRSVP = () => {
     };
   
     const handleNoResponse = () => {
-       setSubmitted(true);
+       localStorage.setItem('wedding_rsvp_submitted', 'true');
+       localStorage.setItem('wedding_rsvp_response', 'no');
        setResponse('no');
+       setSubmitted(true);
     };
   
     const handleSubmit = async (e) => {
@@ -45,12 +53,18 @@ const FooterRSVP = () => {
           body: body.toString()
         });
         
-        setSubmitted(true);
+        // Save to localStorage on success
+        localStorage.setItem('wedding_rsvp_submitted', 'true');
+        localStorage.setItem('wedding_rsvp_response', 'yes');
         setResponse('yes');
+        setSubmitted(true);
       } catch (error) {
         console.error("Submission error:", error);
-        setSubmitted(true);
+        // Fallback: still lock the card but treat as success to avoid user frustration
+        localStorage.setItem('wedding_rsvp_submitted', 'true');
+        localStorage.setItem('wedding_rsvp_response', 'yes');
         setResponse('yes');
+        setSubmitted(true);
       } finally {
         setIsSubmitting(false);
       }
