@@ -9,7 +9,7 @@ const FooterRSVP = () => {
       name: '',
       email: '',
       contactInfo: '',
-      guestCount: '' // Initialized to empty string as requested
+      guestCount: '' 
     });
   
     const handleChange = (e) => {
@@ -28,7 +28,6 @@ const FooterRSVP = () => {
       const scriptUrl = "https://script.google.com/macros/s/AKfycbw7tCSAkRcu0GF8pl2N90qWGH7PRbSrydTys2nohJXvsM3hHcIMB7rjyUOqrA8Cbsmu/exec";
   
       try {
-        // Using URLSearchParams or FormData for better compatibility with Apps Script
         const body = new URLSearchParams();
         body.append('name', formData.name);
         body.append('email', formData.email || 'N/A');
@@ -38,7 +37,7 @@ const FooterRSVP = () => {
         
         await fetch(scriptUrl, {
           method: 'POST',
-          mode: 'no-cors', // Essential for Google Apps Script cross-origin
+          mode: 'no-cors', 
           cache: 'no-cache',
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
@@ -46,12 +45,10 @@ const FooterRSVP = () => {
           body: body.toString()
         });
         
-        // Since no-cors doesn't let us see the response, we assume success after the fetch completes
         setSubmitted(true);
         setResponse('yes');
       } catch (error) {
         console.error("Submission error:", error);
-        // Still move to success state to not block the user UX
         setSubmitted(true);
         setResponse('yes');
       } finally {
@@ -97,28 +94,32 @@ const FooterRSVP = () => {
       <motion.section className="py-20 px-6 relative z-10 w-full font-serif">
         <div className="max-w-sm mx-auto bg-paper border-2 border-primary-pink/20 rounded-[40px] p-8 shadow-2xl relative overflow-hidden">
           
-          <div className="text-center mb-10">
+          <div className="text-center mb-8">
             <h2 className="font-serif text-3xl text-dark-accent italic leading-tight mb-2">Are You Coming?</h2>
             <div className="w-12 h-px bg-primary-pink/40 mx-auto mb-4"></div>
+            {/* Added Surprise Text */}
+            <p className="font-sans text-[10px] text-primary-pink italic font-bold tracking-tight animate-pulse">If yes, a surprise is waiting for you</p>
           </div>
 
           {!response ? (
             <div className="space-y-4">
+              {/* Styled In Sha Allah Button with Green Theme */}
               <button 
                 onClick={() => setResponse('yes_init')}
-                className="w-full flex items-center justify-between p-4 rounded-2xl border border-primary-pink/20 bg-white shadow-sm hover:shadow-md hover:bg-soft-pink/10 transition-all font-serif text-lg text-dark-accent group"
+                className="w-full flex items-center justify-between p-4 rounded-2xl border-2 border-emerald-100 bg-emerald-50/30 shadow-sm hover:shadow-md hover:bg-emerald-50 transition-all font-serif text-lg text-emerald-800 group"
               >
                 <span>Yes, In Sha Allah! 😍</span>
-                <div className="w-8 h-8 rounded-full bg-primary-pink/10 flex items-center justify-center text-primary-pink group-hover:bg-primary-pink group-hover:text-white transition-all">
+                <div className="w-8 h-8 rounded-full bg-emerald-500/10 flex items-center justify-center text-emerald-600 group-hover:bg-emerald-500 group-hover:text-white transition-all">
                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
                      <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
                    </svg>
                 </div>
               </button>
 
+              {/* Styled No Button with Red/Mauve Theme */}
               <button 
                 onClick={handleNoResponse}
-                className="w-full flex items-center justify-between p-4 rounded-2xl border border-secondary-pink/10 bg-white/50 shadow-sm hover:shadow-md hover:bg-red-50/20 transition-all font-serif text-lg text-dark-accent/60 italic group"
+                className="w-full flex items-center justify-between p-4 rounded-2xl border border-rose-100 bg-rose-50/20 shadow-sm hover:shadow-md hover:bg-rose-50/50 transition-all font-serif text-lg text-rose-800/60 italic group"
               >
                 <span>Unfortunately, I can't make it</span>
               </button>

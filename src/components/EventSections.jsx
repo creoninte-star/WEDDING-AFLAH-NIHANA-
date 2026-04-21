@@ -62,18 +62,18 @@ const ScratchCardDate = ({ dateString, onReveal }) => {
     const ctx = canvas.getContext('2d');
     ctx.scale(dpr, dpr);
     
-    // Theme-Consistent Mauve/Pink Gradient for Scratch Cover
+    // Updated to Champagne Gold Gradient to match "With Love & Duas"
     const gradient = ctx.createLinearGradient(0, 0, rect.width, rect.height);
-    gradient.addColorStop(0, '#D9858F'); // Primary Pink
-    gradient.addColorStop(0.5, '#E8A0A6'); // Soft Pink
-    gradient.addColorStop(1, '#9A4F63'); // Secondary Mauve
+    gradient.addColorStop(0, '#D8C2A0'); // Champagne Gold
+    gradient.addColorStop(0.5, '#E5D5BC'); // Lighter Gold
+    gradient.addColorStop(1, '#B6A084'); // Deeper Gold
     
     ctx.fillStyle = gradient;
     ctx.fillRect(0, 0, rect.width, rect.height);
     
     // Ornate Texture Pattern
-    ctx.globalAlpha = 0.1;
-    ctx.strokeStyle = '#FFF';
+    ctx.globalAlpha = 0.15;
+    ctx.strokeStyle = '#4A3728';
     ctx.lineWidth = 0.3;
     for (let i = 0; i < rect.width; i += 8) {
       ctx.beginPath();
@@ -84,7 +84,7 @@ const ScratchCardDate = ({ dateString, onReveal }) => {
     ctx.globalAlpha = 1.0;
 
     // Stylish Text on Foil
-    ctx.fillStyle = '#FFF';
+    ctx.fillStyle = '#4A3728';
     ctx.font = 'bold 11px Montserrat';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
@@ -308,7 +308,7 @@ const EventSections = ({ onAllRevealed }) => {
       >
         <div 
           ref={innerCardRef}
-          className="border border-primary-pink/30 rounded-t-[160px] rounded-b-xl p-8 bg-paper shadow-2xl embossed w-full max-w-sm relative"
+          className="border border-primary-pink/30 rounded-t-[160px] rounded-b-xl p-8 bg-paper shadow-2xl embossed w-full max-sm relative"
         >
           <h2 className="font-serif text-3xl text-dark-accent mb-1 italic">Wedding Ceremonies</h2>
           <div className="w-12 h-px bg-primary-pink/30 mx-auto mb-4" />
