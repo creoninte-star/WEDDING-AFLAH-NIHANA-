@@ -327,7 +327,7 @@ const EventSections = ({ onAllRevealed }) => {
 
   const handleReveal = () => setRevealed(true);
 
-  const commonLocation = "https://maps.google.com/maps?q=Alankar%20Auditorium,%20Mathottam,%20Kozhikode,%20Kerala";
+  const commonLocation = "https://maps.app.goo.gl/RwKWoFTofJcUiRMF9";
   const commonVenue = "Alankar Auditorium, Calicut";
 
   return (

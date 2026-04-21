@@ -50,7 +50,7 @@ const VenueMaps = () => {
         </div>
         
         <a 
-          href="https://maps.google.com/maps?q=Alankar%20Auditorium,%20Mathottam,%20Kozhikode,%20Kerala"
+          href="https://maps.app.goo.gl/RwKWoFTofJcUiRMF9"
           target="_blank"
           rel="noopener noreferrer"
           className="relative inline-block mt-6 px-8 py-3 bg-envelope border border-gold/50 text-gold font-sans text-[10px] font-bold uppercase tracking-widest rounded-full shadow-md hover:bg-gold hover:text-white transition-all duration-300 z-20"
