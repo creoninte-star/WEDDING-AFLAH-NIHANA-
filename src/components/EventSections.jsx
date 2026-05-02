@@ -294,7 +294,18 @@ const EventSections = ({ onAllRevealed }) => {
 
   const handleReveal = () => setRevealed(true);
 
-  const commonLocation = "https://maps.app.goo.gl/RwKWoFTofJcUiRMF9";
+  const handleLocationClick = (e) => {
+    e.preventDefault();
+    // Detect iOS (iPhone, iPad, iPod)
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+    
+    if (isIOS) {
+      window.open("https://maps.apple/p/xqtwsrs0JL2kAP", "_blank");
+    } else {
+      window.open("https://maps.app.goo.gl/RwKWoFTofJcUiRMF9", "_blank");
+    }
+  };
+
   const commonVenue = "Opposite Sakkina Textiles";
 
   return (
@@ -342,15 +353,13 @@ const EventSections = ({ onAllRevealed }) => {
             </div>
 
             <motion.div className="pt-6">
-              <a 
-                href={commonLocation}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-3 px-8 py-3 rounded-full border-2 border-primary-pink/40 bg-white shadow-lg text-primary-pink font-serif text-[13px] tracking-widest hover:bg-primary-pink hover:text-white transition-all duration-500 uppercase italic font-bold"
+              <button 
+                onClick={handleLocationClick}
+                className="inline-flex items-center gap-3 px-8 py-3 rounded-full border-2 border-primary-pink/40 bg-white shadow-lg text-primary-pink font-serif text-[13px] tracking-widest hover:bg-primary-pink hover:text-white transition-all duration-500 uppercase italic font-bold cursor-pointer"
               >
                 <Map size={16} />
                 View Location
-              </a>
+              </button>
             </motion.div>
           </div>
         </div>
